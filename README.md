@@ -23,3 +23,9 @@ BTW, it was inspired by Nico's
 # TODO
 * Lol I haven't started coding this yet, just brainstorming
 * I should start by writing a tokenizer
+* Tokens:
+ * Syntax: ACCESSOR (.)
+ * Types: BOOL, STRING
+ * Math ops: +=, -=, *=, /=, %=, ++[var], --[var], [var]++, [var]--
+ * Other ops:
+ * Misc: FUNCTION_CALL

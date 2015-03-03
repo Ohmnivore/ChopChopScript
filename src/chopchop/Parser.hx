@@ -15,6 +15,7 @@ class Parser
 	{
 		input = Input;
 		k = K;
+		input.reset();
 		
 		var i:Int = 0;
 		while (i < k)

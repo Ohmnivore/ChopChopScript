@@ -7,8 +7,7 @@ package chopchop;
 class Lexer
 {
 	public static inline var EOF_STR:String = "EOF";
-	public static inline var EOF:Int = 1;
-	public static var tokenNames:Array<String> = ["n/a", "EOF"];
+	public static var EOF:Int = getID();
 	
 	private var input:String;
 	public var p:Int = 0;
@@ -17,6 +16,19 @@ class Lexer
 	public function new(Input:String) 
 	{
 		input = Input;
+		reset();
+	}
+	
+	private static var curID:Int = 0;
+	public static function getID():Int
+	{
+		curID += 1;
+		return curID;
+	}
+	
+	public function reset():Void
+	{
+		p = 0;
 		c = input.charAt(p);
 	}
 	
@@ -40,7 +52,7 @@ class Lexer
 	
 	public function nextToken():Token
 	{
-		return new Token(Lexer.EOF, Lexer.EOF_STR, tokenNames);
+		return new Token(Lexer.EOF, Lexer.EOF_STR, null);
 	}
 	
 	public function getTokenName(T:Int):String

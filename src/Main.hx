@@ -1,5 +1,6 @@
 package;
 
+import chopchop.ChopLexer;
 import chopchop.Lexer;
 import chopchop.LookaheadLexer;
 import chopchop.LookaheadParser;
@@ -28,17 +29,17 @@ class Main
 	
 	static public function test():Void
 	{
-		var lexer:LookaheadLexer = new LookaheadLexer("[a,b=c,[d,e]]");
-		var parser:LookaheadParser = new LookaheadParser(lexer, 2);
+		var lexer:ChopLexer = new ChopLexer("a = 2 + 3.5;\nb = 2 - 1;\nc = 2 * 3;\nd = 2 / 0.5;\ne = 4 % 3;");
 		
-        parser.list(); // begin parsing at rule list
+		var token:Token = lexer.nextToken();
+		while (token.type != Lexer.EOF)
+		{
+			trace(token, lexer.p);
+			token = lexer.nextToken();
+		}
+		trace(token, lexer.p);
 		
-		//var token:Token = lexer.nextToken();
-		//while (token.type != Lexer.EOF)
-		//{
-			//trace(token, lexer.p);
-			//token = lexer.nextToken();
-		//}
-		//trace(token);
+		//var parser:LookaheadParser = new LookaheadParser(lexer, 2);
+        //parser.list(); // begin parsing at rule list
 	}
 }
