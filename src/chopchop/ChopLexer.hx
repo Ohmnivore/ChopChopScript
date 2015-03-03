@@ -9,6 +9,22 @@ class ChopLexer extends Lexer
 {
 	//SYNTAX
 	public static var SEMI_COLON:Int = Lexer.getID();
+	public static var VARIABLE:Int = Lexer.getID();
+	public static var FIELD_ACCESSSOR:Int = Lexer.getID();
+	public static var OPEN_PAR:Int = Lexer.getID();
+	public static var CLOSE_PAR:Int = Lexer.getID();
+	public static var OPEN_BRACK:Int = Lexer.getID();
+	public static var CLOSE_BRACK:Int = Lexer.getID();
+	public static var COMMA:Int = Lexer.getID();
+	
+	//KEYWORDS
+	public static var NEW:Int = Lexer.getID();
+	public static var IF:Int = Lexer.getID();
+	public static var WHILE:Int = Lexer.getID();
+	public static var DO:Int = Lexer.getID();
+	public static var FOR:Int = Lexer.getID();
+	public static var BREAK:Int = Lexer.getID();
+	public static var CONTINUE:Int = Lexer.getID();
 	
 	//MATH OPS
 	public static var PLUS:Int = Lexer.getID();
@@ -21,9 +37,19 @@ class ChopLexer extends Lexer
 	public static var ASSIGN:Int = Lexer.getID();
 	
 	//TYPES
-	public static var VARIABLE:Int = Lexer.getID();
 	public static var INT:Int = Lexer.getID();
 	public static var FLOAT:Int = Lexer.getID();
+	public static var STRING:Int = Lexer.getID();
+	public static var BOOL:Int = Lexer.getID();
+	
+	//MISC
+	public static var SMALLER:Int = Lexer.getID();
+	public static var BIGGER:Int = Lexer.getID();
+	public static var AND:Int = Lexer.getID();
+	public static var OR:Int = Lexer.getID();
+	public static var XOR:Int = Lexer.getID();
+	public static var NOT:Int = Lexer.getID();
+	public static var COMPLEMENT:Int = Lexer.getID();
 	
 	public var tokenNames:Array<String> = ["n/a", "EOF"];
 	public function new(Input:String) 
@@ -94,13 +120,69 @@ class ChopLexer extends Lexer
 			{
 				return quickConsume(ASSIGN);
 			}
+			else if (c == ".")
+			{
+				return quickConsume(FIELD_ACCESSSOR);
+			}
+			else if (c == "(")
+			{
+				return quickConsume(OPEN_PAR);
+			}
+			else if (c == ")")
+			{
+				return quickConsume(CLOSE_PAR);
+			}
+			else if (c == "[")
+			{
+				return quickConsume(OPEN_BRACK);
+			}
+			else if (c == "]")
+			{
+				return quickConsume(CLOSE_BRACK);
+			}
+			else if (c == ".")
+			{
+				return quickConsume(COMMA);
+			}
+			else if (c == "<")
+			{
+				return quickConsume(SMALLER);
+			}
+			else if (c == ">")
+			{
+				return quickConsume(BIGGER);
+			}
+			else if (c == "&")
+			{
+				return quickConsume(AND);
+			}
+			else if (c == "^")
+			{
+				return quickConsume(XOR);
+			}
+			else if (c == "|")
+			{
+				return quickConsume(OR);
+			}
+			else if (c == "!")
+			{
+				return quickConsume(NOT);
+			}
+			else if (c == "~")
+			{
+				return quickConsume(COMPLEMENT);
+			}
+			else if (isQuote(c))
+			{
+				return STR();
+			}
 			else if (isDigit(c))
 			{
 				return NUM();
 			}
 			else
 			{
-				return VAR();
+				return PARSELONGSTRING();
 			}
 		}
 		
@@ -138,7 +220,7 @@ class ChopLexer extends Lexer
 		return code >= 48 && code <= 57;
 	}
 	
-	private function VAR():Token
+	private function PARSELONGSTRING():Token
 	{
 		var buf:String = "";
 		do
@@ -146,14 +228,57 @@ class ChopLexer extends Lexer
 			buf += c;
 			consume();
 		}
-		while (isLETTER());
-		return new Token(VARIABLE, buf, tokenNames);
+		while (isLETTER() || isDigit(c));
+		
+		var ret:Int = VARIABLE;
+		if (buf == "true" || buf == "false")
+			ret = BOOL;
+		else if (buf == "new")
+			ret = NEW;
+		else if (buf == "if")
+			ret = IF;
+		else if (buf == "while")
+			ret = WHILE;
+		else if (buf == "do")
+			ret = DO;
+		else if (buf == "for")
+			ret = FOR;
+		else if (buf == "break")
+			ret = BREAK;
+		else if (buf == "continue")
+			ret = CONTINUE;
+		
+		return new Token(ret, buf, tokenNames);
 	}
 	private function isLETTER():Bool
 	{
 		var code:Int = c.charCodeAt(0);
 		
+		if (code == '_'.charCodeAt(0))
+			return true;
+		
 		return code >= 'a'.charCodeAt(0) && code <= 'z'.charCodeAt(0) ||
 			code >= 'A'.charCodeAt(0) && code <= 'Z'.charCodeAt(0);
+	}
+	
+	private function isQuote(S:String):Bool
+	{
+		return S == '"';
+	}
+	private function STR():Token
+	{
+		var buf:String = "";
+		do
+		{
+			if (c == Lexer.EOF_STR)
+				doThrow("Unclosed string");
+			buf += c;
+			consume();
+		}
+		while (c != '"');
+		buf += c;
+		consume();
+		
+		return new Token(STRING, buf, tokenNames);
 	}
 }

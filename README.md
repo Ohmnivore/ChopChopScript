@@ -21,11 +21,9 @@ BTW, it was inspired by Nico's
 [VainLang](http://nicom1.github.io/interpreter/).
 
 # TODO
-* Lol I haven't started coding this yet, just brainstorming
-* I should start by writing a tokenizer
-* Tokens:
- * Syntax: ACCESSOR (.)
- * Types: BOOL, STRING
- * Math ops: +=, -=, *=, /=, %=, ++[var], --[var], [var]++, [var]--
- * Other ops:
- * Misc: FUNCTION_CALL
+* Write a parser which produces an AST
+* Write an interpeter for the AST that the parser constructs
+
+# REF
+* http://www.amazon.ca/Language-Implementation-Patterns-Domain-Specific-Programming/dp/193435645X
+* http://rosettacode.org/wiki/Parsing/Shunting-yard_algorithm

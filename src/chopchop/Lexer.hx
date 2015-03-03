@@ -59,4 +59,9 @@ class Lexer
 	{
 		return "";
 	}
+	
+	private function doThrow(Msg:String):Void
+	{
+		throw Msg + " at " + p;
+	}
 }
