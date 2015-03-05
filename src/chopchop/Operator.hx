@@ -1,4 +1,5 @@
 package chopchop;
+import chopchop.ast.AST;
 
 /**
  * ...
@@ -6,17 +7,17 @@ package chopchop;
  */
 class Operator
 {
-	public var symbol:Int;
+	private static inline var MAX_PRECEDENCE:Int = 17;
 	public var rightAssociative:Bool;
 	public var precedence:Int;
-	public var nameArr:Array<String>;
+	public var ast:Class<AST>;
 	
-	public function new(S:Int, RightAssociative:Bool, Precedence:Int, NameArr:Array<String>) 
+	public function new(Ast:Class<AST>, RightAssociative:Bool, Precedence:Int) 
 	{
-		symbol = S;
+		ast = Ast;
 		rightAssociative = RightAssociative;
-		precedence = Precedence;
-		nameArr = NameArr;
+		//precedence = Precedence;
+		precedence = MAX_PRECEDENCE - Precedence;
 	}
 	
 	public function compare(Op:Operator):Int
@@ -31,6 +32,6 @@ class Operator
 	
 	public function toString():String
 	{
-		return nameArr[symbol];
+		return Type.getClassName(ast);
 	}
 }

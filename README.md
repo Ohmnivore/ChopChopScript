@@ -21,10 +21,18 @@ BTW, it was inspired by Nico's
 [VainLang](http://nicom1.github.io/interpreter/).
 
 # TODO
-* Write a parser which produces an AST -> started
 * Write an interpeter for the AST that the parser constructs
+* Make ASTs for:
+ * Values:
+ * Math ops: -[var], ++[var], [var]++, --[var], [var]--
+ * Bitwise ops: ~[var]
+ * Boolean ops: ![var]
+ * Binary ops:
+ * Function call
+ * Keywords: new, while, do while, if, else, else if, continue, break, for
 
 # REF
 * http://www.amazon.ca/Language-Implementation-Patterns-Domain-Specific-Programming/dp/193435645X
 * http://rosettacode.org/wiki/Parsing/Shunting-yard_algorithm
 * https://www.klittlepage.com/2013/12/22/twelve-days-2013-shunting-yard-algorithm/
+* http://en.cppreference.com/w/cpp/language/operator_precedence

@@ -34,7 +34,7 @@ class ChopLexer extends Lexer
 	public static var MOD:Int = Lexer.getID();
 	
 	//OTHER OPS
-	public static var ASSIGN:Int = Lexer.getID();
+	public static var EQUAL:Int = Lexer.getID();
 	
 	//TYPES
 	public static var INT:Int = Lexer.getID();
@@ -118,7 +118,7 @@ class ChopLexer extends Lexer
 			}
 			else if (c == "=")
 			{
-				return quickConsume(ASSIGN);
+				return quickConsume(EQUAL);
 			}
 			else if (c == ".")
 			{
