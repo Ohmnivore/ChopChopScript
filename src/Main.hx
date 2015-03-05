@@ -36,8 +36,8 @@ class Main
 		//lexer = new ChopLexer('3 + 4 * 2 / ( 1 - 5 ) * 2 / 3;');
 		//lexer = new ChopLexer('(3 + 4) * id;');
 		//lexer = new ChopLexer('a = k.lol % 4;');
-		//lexer = new ChopLexer('kek.lol + 4;');
-		lexer = new ChopLexer('3 * 4 + 4;');
+		lexer = new ChopLexer('kek.lol + 4;');
+		//lexer = new ChopLexer('3 * 4 + 5;');
 		
 		//var token:Token = lexer.nextToken();
 		//while (token.type != Lexer.EOF)

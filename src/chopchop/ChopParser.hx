@@ -17,7 +17,7 @@ class ChopParser extends Parser
 	{
 		lexer = Input;
 		initOps();
-		super(Input, 3);
+		super(Input, 2);
 		
 		ast = makeAST();
 	}
@@ -44,8 +44,8 @@ class ChopParser extends Parser
 			var tok:Token = LT(1);
 			var t2:Int = LA(2);
 			var tok2:Token = LT(2);
-			var t3:Int = LA(3);
-			var tok3:Token = LT(3);
+			//var t3:Int = LA(3);
+			//var tok3:Token = LT(3);
 			
 			if (t == ChopLexer.OPEN_PAR)
 			{
@@ -134,14 +134,15 @@ class ChopParser extends Parser
 			{
 				handleSimpleOp(BitwiseShiftLeft, tok, operatorStack, operandStack);
 			}
-			else if (t == ChopLexer.BIGGER && t2 == ChopLexer.BIGGER && t3 != ChopLexer.BIGGER)
+			//else if (t == ChopLexer.BIGGER && t2 == ChopLexer.BIGGER && t3 != ChopLexer.BIGGER)
+			else if (t == ChopLexer.BIGGER && t2 == ChopLexer.BIGGER)
 			{
 				handleSimpleOp(BitwiseShiftRight, tok, operatorStack, operandStack);
 			}
-			else if (t == ChopLexer.BIGGER && t2 == ChopLexer.BIGGER && t3 == ChopLexer.BIGGER)
-			{
-				handleSimpleOp(BitwiseShiftRightUnsigned, tok, operatorStack, operandStack);
-			}
+			//else if (t == ChopLexer.BIGGER && t2 == ChopLexer.BIGGER && t3 == ChopLexer.BIGGER)
+			//{
+				//handleSimpleOp(BitwiseShiftRightUnsigned, tok, operatorStack, operandStack);
+			//}
 			
 			//Boolean operators
 			else if (t == ChopLexer.AND && t2 == ChopLexer.AND)
@@ -179,6 +180,10 @@ class ChopParser extends Parser
 			else if (t == ChopLexer.VARIABLE)
 			{
 				operandStack.add(new Variable(tok, []));
+			}
+			else if (t == ChopLexer.STRING)
+			{
+				operandStack.add(new StringV(tok, []));
 			}
 			
 			else
@@ -262,7 +267,7 @@ class ChopParser extends Parser
 			{
 				OperatorStack.pop();
 				//Not sure if addNode(OperandStack, t) or
-				addNode(OperandStack, T, Ast);
+				addNode(OperandStack, ast2.token, Type.getClass(ast2));
 			}
 			else
 			{
