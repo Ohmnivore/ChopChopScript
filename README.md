@@ -21,15 +21,15 @@ BTW, it was inspired by Nico's
 [VainLang](http://nicom1.github.io/interpreter/).
 
 # TODO
-* Write an interpeter for the AST that the parser constructs
+* Write an interpeter for the ASTs that the parser constructs
 * Make ASTs for:
- * Values:
- * Math ops: -[var], ++[var], [var]++, --[var], [var]--
+ * Values: Arrays
+ * Math ops: -[var], ++[var], [var]++, --[var], [var]--, +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
  * Bitwise ops: ~[var]
  * Boolean ops: ![var]
- * Binary ops:
+ * Ternary operator (?:)
  * Function call
- * Keywords: new, while, do while, if, else, else if, continue, break, for
+ * Keywords: new, do while, for x in
 
 # REF
 * http://www.amazon.ca/Language-Implementation-Patterns-Domain-Specific-Programming/dp/193435645X

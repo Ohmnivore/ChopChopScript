@@ -15,11 +15,14 @@ class ChopLexer extends Lexer
 	public static var CLOSE_PAR:Int = Lexer.getID();
 	public static var OPEN_BRACK:Int = Lexer.getID();
 	public static var CLOSE_BRACK:Int = Lexer.getID();
+	public static var OPEN_CURLY:Int = Lexer.getID();
+	public static var CLOSE_CURLY:Int = Lexer.getID();
 	public static var COMMA:Int = Lexer.getID();
 	
 	//KEYWORDS
 	public static var NEW:Int = Lexer.getID();
 	public static var IF:Int = Lexer.getID();
+	public static var ELSE:Int = Lexer.getID();
 	public static var WHILE:Int = Lexer.getID();
 	public static var DO:Int = Lexer.getID();
 	public static var FOR:Int = Lexer.getID();
@@ -140,6 +143,14 @@ class ChopLexer extends Lexer
 			{
 				return quickConsume(CLOSE_BRACK);
 			}
+			else if (c == "{")
+			{
+				return quickConsume(OPEN_CURLY);
+			}
+			else if (c == "}")
+			{
+				return quickConsume(CLOSE_CURLY);
+			}
 			else if (c == ".")
 			{
 				return quickConsume(COMMA);
@@ -237,6 +248,8 @@ class ChopLexer extends Lexer
 			ret = NEW;
 		else if (buf == "if")
 			ret = IF;
+		else if (buf == "else")
+			ret = ELSE;
 		else if (buf == "while")
 			ret = WHILE;
 		else if (buf == "do")

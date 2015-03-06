@@ -36,8 +36,11 @@ class Main
 		//lexer = new ChopLexer('3 + 4 * 2 / ( 1 - 5 ) * 2 / 3;');
 		//lexer = new ChopLexer('(3 + 4) * id;');
 		//lexer = new ChopLexer('a = k.lol % 4;');
-		lexer = new ChopLexer('kek.lol + 4;');
+		//lexer = new ChopLexer('kek.lol + 4;2 + 3;');
 		//lexer = new ChopLexer('3 * 4 + 5;');
+		//lexer = new ChopLexer('if (kek == 0 && topkek == 1) {lel = 5;toplel=4;} else lel = 3;');
+		//lexer = new ChopLexer('if (true) k = 0; else if (false) kek = 1; else lel = 3;');
+		lexer = new ChopLexer('while (true) {kek = 3;}');
 		
 		//var token:Token = lexer.nextToken();
 		//while (token.type != Lexer.EOF)
@@ -49,13 +52,9 @@ class Main
 		
 		lexer.reset();
 		parser = new ChopParser(lexer);
-		traceAST(parser.ast);
-	}
-	
-	static private function traceAST(A:AST):Void
-	{
-		trace(A.token.toString());
-		for (c in A.children)
-			traceAST(c);
+		for (ast in parser.ast)
+		{
+			trace("\n" + ast.toString());
+		}
 	}
 }

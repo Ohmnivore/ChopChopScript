@@ -11,7 +11,7 @@ class ChopParser extends Parser
 {
 	public var lexer:ChopLexer;
 	private var ops:ObjectMap<Dynamic, Operator>;
-	public var ast:AST;
+	public var ast:Array<AST>;
 	
 	public function new(Input:ChopLexer) 
 	{
@@ -19,7 +19,7 @@ class ChopParser extends Parser
 		initOps();
 		super(Input, 2);
 		
-		ast = makeAST();
+		ast = makeAST(Lexer.EOF);
 	}
 	
 	private function addNode(Stack:GenericStack<AST>, T:Token, Ast:Class<AST>):Void
@@ -29,9 +29,100 @@ class ChopParser extends Parser
 		var ast:AST = Type.createInstance(Ast, [T, [leftASTNode, rightASTNode]]);
         Stack.add(ast);
     }
-	public function makeAST():AST
+	public function makeAST(Until:Int):Array<AST>
 	{
-		return parseExpr(ChopLexer.SEMI_COLON);
+		var ret:Array<AST> = [];
+		var lastIf:If = null;
+		while (LA(1) != Until)
+		{
+			var t:Int = LA(1);
+			var tok:Token = LT(1);
+			var t2:Int = LA(2);
+			var tok2:Token = LT(2);
+			var t3:Int = LA(3);
+			var tok3:Token = LT(3);
+			
+			if (t == ChopLexer.IF || (t == ChopLexer.ELSE && t2 == ChopLexer.IF))
+			{
+				if (t == ChopLexer.ELSE)
+				{
+					match(ChopLexer.ELSE);
+					tok.text = "else if";
+				}
+				match(ChopLexer.IF);
+				match(ChopLexer.OPEN_PAR);
+				var condition:AST = parseExpr(ChopLexer.CLOSE_PAR);
+				match(ChopLexer.CLOSE_PAR);
+				var ifTrue:Array<AST> = [];
+				if (LA(1) == ChopLexer.OPEN_CURLY)
+				{
+					ifTrue = makeAST(ChopLexer.CLOSE_CURLY);
+				}
+				else
+				{
+					ifTrue = [parseExpr(ChopLexer.SEMI_COLON)];
+				}
+				
+				var thisIf:If = new If(tok, condition, ifTrue, null);
+				if (t == ChopLexer.ELSE)
+					lastIf.ifFalse = [thisIf];
+				else
+					ret.push(thisIf);
+				lastIf = thisIf;
+			}
+			else if (t == ChopLexer.ELSE)
+			{
+				match(ChopLexer.ELSE);
+				var ifFalse:Array<AST> = [];
+				if (LA(1) == ChopLexer.OPEN_CURLY)
+				{
+					ifFalse = makeAST(ChopLexer.CLOSE_CURLY);
+				}
+				else
+				{
+					ifFalse = [parseExpr(ChopLexer.SEMI_COLON)];
+				}
+				lastIf.ifFalse = ifFalse;
+			}
+			
+			else if (t == ChopLexer.WHILE)
+			{
+				match(ChopLexer.WHILE);
+				match(ChopLexer.OPEN_PAR);
+				
+				var condition:AST = parseExpr(ChopLexer.CLOSE_PAR);
+				match(ChopLexer.CLOSE_PAR);
+				var body:Array<AST> = [];
+				if (LA(1) == ChopLexer.OPEN_CURLY)
+				{
+					body = makeAST(ChopLexer.CLOSE_CURLY);
+				}
+				else
+				{
+					body = makeAST(ChopLexer.SEMI_COLON);
+				}
+				
+				ret.push(new While(tok, condition, body));
+			}
+			
+			//Keywords
+			else if (t == ChopLexer.CONTINUE)
+			{
+				ret.push(new Continue(tok, []));
+			}
+			else if (t == ChopLexer.BREAK)
+			{
+				ret.push(new Break(tok, []));
+			}
+			
+			else
+			{
+				ret.push(parseExpr(ChopLexer.SEMI_COLON));
+			}
+			consume();
+		}
+		
+		return ret;
 	}
 	public function parseExpr(Until:Int):AST
 	{
@@ -44,8 +135,8 @@ class ChopParser extends Parser
 			var tok:Token = LT(1);
 			var t2:Int = LA(2);
 			var tok2:Token = LT(2);
-			//var t3:Int = LA(3);
-			//var tok3:Token = LT(3);
+			var t3:Int = LA(3);
+			var tok3:Token = LT(3);
 			
 			if (t == ChopLexer.OPEN_PAR)
 			{
@@ -94,10 +185,14 @@ class ChopParser extends Parser
 			//Boolean operators
 			else if (t == ChopLexer.EQUAL && t2 == ChopLexer.EQUAL)
 			{
+				consume();
+				tok.text = "==";
 				handleSimpleOp(Equals, tok, operatorStack, operandStack);
 			}
 			else if (t == ChopLexer.NOT && t2 == ChopLexer.EQUAL)
 			{
+				consume();
+				tok.text = "!=";
 				handleSimpleOp(NotEquals, tok, operatorStack, operandStack);
 			}
 			else if (t == ChopLexer.BIGGER && t2 != ChopLexer.BIGGER && t2 != ChopLexer.EQUAL)
@@ -110,10 +205,14 @@ class ChopParser extends Parser
 			}
 			else if (t == ChopLexer.BIGGER && t2 == ChopLexer.EQUAL)
 			{
+				consume();
+				tok.text = ">=";
 				handleSimpleOp(BiggerOrEqual, tok, operatorStack, operandStack);
 			}
 			else if (t == ChopLexer.SMALLER && t2 == ChopLexer.EQUAL)
 			{
+				consume();
+				tok.text = "<=";
 				handleSimpleOp(SmallerOrEqual, tok, operatorStack, operandStack);
 			}
 			
@@ -132,25 +231,35 @@ class ChopParser extends Parser
 			}
 			else if (t == ChopLexer.SMALLER && t2 == ChopLexer.SMALLER)
 			{
+				consume();
+				tok.text = "<<";
 				handleSimpleOp(BitwiseShiftLeft, tok, operatorStack, operandStack);
 			}
-			//else if (t == ChopLexer.BIGGER && t2 == ChopLexer.BIGGER && t3 != ChopLexer.BIGGER)
-			else if (t == ChopLexer.BIGGER && t2 == ChopLexer.BIGGER)
+			else if (t == ChopLexer.BIGGER && t2 == ChopLexer.BIGGER && t3 != ChopLexer.BIGGER)
 			{
+				consume();
+				tok.text = ">>";
 				handleSimpleOp(BitwiseShiftRight, tok, operatorStack, operandStack);
 			}
-			//else if (t == ChopLexer.BIGGER && t2 == ChopLexer.BIGGER && t3 == ChopLexer.BIGGER)
-			//{
-				//handleSimpleOp(BitwiseShiftRightUnsigned, tok, operatorStack, operandStack);
-			//}
+			else if (t == ChopLexer.BIGGER && t2 == ChopLexer.BIGGER && t3 == ChopLexer.BIGGER)
+			{
+				consume();
+				consume();
+				tok.text = ">>>";
+				handleSimpleOp(BitwiseShiftRightUnsigned, tok, operatorStack, operandStack);
+			}
 			
 			//Boolean operators
 			else if (t == ChopLexer.AND && t2 == ChopLexer.AND)
 			{
+				consume();
+				tok.text = "&&";
 				handleSimpleOp(And, tok, operatorStack, operandStack);
 			}
 			else if (t == ChopLexer.OR && t2 == ChopLexer.OR)
 			{
+				consume();
+				tok.text = "||";
 				handleSimpleOp(Or, tok, operatorStack, operandStack);
 			}
 			
