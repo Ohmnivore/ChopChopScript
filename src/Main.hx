@@ -40,7 +40,10 @@ class Main
 		//lexer = new ChopLexer('3 * 4 + 5;');
 		//lexer = new ChopLexer('if (kek == 0 && topkek == 1) {lel = 5;toplel=4;} else lel = 3;');
 		//lexer = new ChopLexer('if (true) k = 0; else if (false) kek = 1; else lel = 3;');
-		lexer = new ChopLexer('while (true) {kek = 3;}');
+		//lexer = new ChopLexer('if (true) k = 0; else lel = 3;');
+		//lexer = new ChopLexer('while (true) {kek = 3;}');
+		//lexer = new ChopLexer('while (true) kek = 3;');
+		lexer = new ChopLexer('do {kek = 3;} while (true);');
 		
 		//var token:Token = lexer.nextToken();
 		//while (token.type != Lexer.EOF)

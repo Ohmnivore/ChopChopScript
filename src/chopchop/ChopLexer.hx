@@ -44,6 +44,7 @@ class ChopLexer extends Lexer
 	public static var FLOAT:Int = Lexer.getID();
 	public static var STRING:Int = Lexer.getID();
 	public static var BOOL:Int = Lexer.getID();
+	public static var NULL:Int = Lexer.getID();
 	
 	//MISC
 	public static var SMALLER:Int = Lexer.getID();
@@ -260,6 +261,8 @@ class ChopLexer extends Lexer
 			ret = BREAK;
 		else if (buf == "continue")
 			ret = CONTINUE;
+		else if (buf == "null")
+			ret = NULL;
 		
 		return new Token(ret, buf, tokenNames);
 	}

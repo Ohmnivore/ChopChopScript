@@ -33,7 +33,7 @@ class ChopParser extends Parser
 	{
 		var ret:Array<AST> = [];
 		var lastIf:If = null;
-		while (LA(1) != Until)
+		while (LA(1) != Until && LA(1) != Lexer.EOF)
 		{
 			var t:Int = LA(1);
 			var tok:Token = LT(1);
@@ -60,15 +60,21 @@ class ChopParser extends Parser
 				}
 				else
 				{
+					//trace("if1");
+					//ifTrue = makeAST(ChopLexer.SEMI_COLON);
 					ifTrue = [parseExpr(ChopLexer.SEMI_COLON)];
+					//trace("if2");
 				}
 				
+				//trace("if3");
 				var thisIf:If = new If(tok, condition, ifTrue, null);
 				if (t == ChopLexer.ELSE)
 					lastIf.ifFalse = [thisIf];
 				else
 					ret.push(thisIf);
+				
 				lastIf = thisIf;
+				//trace(thisIf);
 			}
 			else if (t == ChopLexer.ELSE)
 			{
@@ -80,7 +86,7 @@ class ChopParser extends Parser
 				}
 				else
 				{
-					ifFalse = [parseExpr(ChopLexer.SEMI_COLON)];
+					ifFalse = makeAST(ChopLexer.SEMI_COLON);
 				}
 				lastIf.ifFalse = ifFalse;
 			}
@@ -103,6 +109,27 @@ class ChopParser extends Parser
 				}
 				
 				ret.push(new While(tok, condition, body));
+			}
+			else if (t == ChopLexer.DO)
+			{
+				match(ChopLexer.DO);
+				var body:Array<AST> = [];
+				if (LA(1) == ChopLexer.OPEN_CURLY)
+				{
+					body = makeAST(ChopLexer.CLOSE_CURLY);
+					match(ChopLexer.CLOSE_CURLY);
+				}
+				else
+				{
+					body = makeAST(ChopLexer.SEMI_COLON);
+					match(ChopLexer.SEMI_COLON);
+				}
+				match(ChopLexer.WHILE);
+				match(ChopLexer.OPEN_PAR);
+				var condition:AST = parseExpr(ChopLexer.CLOSE_PAR);
+				match(ChopLexer.CLOSE_PAR);
+				
+				ret.push(new DoWhile(tok, condition, body));
 			}
 			
 			//Keywords
@@ -129,7 +156,7 @@ class ChopParser extends Parser
 		var operatorStack:GenericStack<AST> = new GenericStack<AST>();
 		var operandStack:GenericStack<AST> = new GenericStack<AST>();
 		
-		while (LA(1) != Until)
+		while (LA(1) != Until && LA(1) != Lexer.EOF)
 		{
 			var t:Int = LA(1);
 			var tok:Token = LT(1);
@@ -293,6 +320,10 @@ class ChopParser extends Parser
 			else if (t == ChopLexer.STRING)
 			{
 				operandStack.add(new StringV(tok, []));
+			}
+			else if (t == ChopLexer.NULL)
+			{
+				operandStack.add(new NullV(tok, []));
 			}
 			
 			else

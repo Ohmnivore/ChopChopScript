@@ -22,14 +22,19 @@ BTW, it was inspired by Nico's
 
 # TODO
 * Write an interpeter for the ASTs that the parser constructs
+* Fix AST parsing for if statement: makeAST instead of [parseExpr]
 * Make ASTs for:
- * Values: Arrays
+ * Values: Arrays ([1, 2, 3])
  * Math ops: -[var], ++[var], [var]++, --[var], [var]--, +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
  * Bitwise ops: ~[var]
  * Boolean ops: ![var]
- * Ternary operator (?:)
  * Function call
- * Keywords: new, do while, for x in
+ * Keywords: new, for x in, cast, trace
+
+# Notes
+* No ... operator aka no for (0...10) style loops
+* No class or function definitions
+* No ternary operator
 
 # REF
 * http://www.amazon.ca/Language-Implementation-Patterns-Domain-Specific-Programming/dp/193435645X
