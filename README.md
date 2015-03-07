@@ -24,7 +24,6 @@ BTW, it was inspired by Nico's
 * Write walk functions for all ASTs
 * Write tests
 * Work on interpreter
-* Fix AST parsing for if statement: makeAST instead of [parseExpr]
 * Make ASTs for:
  * Values: Arrays ([1, 2, 3])
  * Math ops: -[var], ++[var], [var]++, --[var], [var]--, +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=

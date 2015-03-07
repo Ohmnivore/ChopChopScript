@@ -61,13 +61,9 @@ class ChopParser extends Parser
 				}
 				else
 				{
-					//trace("if1");
-					//ifTrue = makeAST(ChopLexer.SEMI_COLON);
-					ifTrue = [parseExpr(ChopLexer.SEMI_COLON)];
-					//trace("if2");
+					ifTrue = makeAST(ChopLexer.SEMI_COLON);
 				}
 				
-				//trace("if3");
 				var thisIf:If = new If(tok, condition, ifTrue, null);
 				if (t == ChopLexer.ELSE)
 					lastIf.ifFalse = [thisIf];
@@ -75,7 +71,6 @@ class ChopParser extends Parser
 					ret.push(thisIf);
 				
 				lastIf = thisIf;
-				//trace(thisIf);
 			}
 			else if (t == ChopLexer.ELSE)
 			{
@@ -152,7 +147,8 @@ class ChopParser extends Parser
 			else
 			{
 				ret.push(parseExpr(ChopLexer.SEMI_COLON));
-				//ret = ret.concat(makeAST(ChopLexer.SEMI_COLON));
+				if (Until == ChopLexer.SEMI_COLON)
+					return ret;
 			}
 			consume();
 		}

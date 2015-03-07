@@ -51,7 +51,7 @@ class Main
 		//lexer = new ChopLexer('true && false; true && true;');
 		//lexer = new ChopLexer('3 > 0;');
 		//lexer = new ChopLexer('if (false || false) 3; else 2;');
-		lexer = new ChopLexer('i = 0; while (true) {i = i + 1; if (i > 3) {break;} else continue ;}');
+		//lexer = new ChopLexer('i = 0; while (true) {i = i + 1; if (i > 3) {break;} else continue ;}');
 		//lexer = new ChopLexer('i = 0; do {i = i + 1;} while (i < 3);');
 		
 		//var token:Token = lexer.nextToken();
