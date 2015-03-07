@@ -8,11 +8,8 @@ import chopchop.Token;
  */
 class ParClose extends AST
 {
-
 	public function new(T:Token, Children:Array<AST>) 
 	{
 		super(T, Children);
-		
 	}
-	
 }

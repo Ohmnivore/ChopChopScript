@@ -23,6 +23,11 @@ BTW, it was inspired by Nico's
 # TODO
 * Write walk functions for all ASTs
 * Work on interpreter:
+ * Break
+ * Continue
+ * While
+ * Do while
+ * If
 * Fix AST parsing for if statement: makeAST instead of [parseExpr]
 * Make ASTs for:
  * Values: Arrays ([1, 2, 3])
@@ -35,7 +40,8 @@ BTW, it was inspired by Nico's
 # Notes
 * No ... operator aka no for (0...10) style loops
 * No class or function definitions
-* No ternary operator
+* No ternary operator (?:)
+* No hex int declaration (aka 0xF)
 
 # REF
 * http://www.amazon.ca/Language-Implementation-Patterns-Domain-Specific-Programming/dp/193435645X
