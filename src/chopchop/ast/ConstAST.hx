@@ -7,18 +7,23 @@ import chopchop.Token;
  * ...
  * @author Ohmnivore
  */
-class BoolV extends ConstAST
+class ConstAST extends AST
 {
+	public var value:Dynamic;
+	
 	public function new(T:Token, Children:Array<AST>) 
 	{
 		super(T, Children);
+		setValue();
 	}
 	
-	override function setValue():Void 
+	private function setValue():Void
 	{
-		if (token.text == "true")
-			value = true;
-		else
-			value = false;
+		
+	}
+	
+	override public function walk(I:ChopInterp):Dynamic 
+	{
+		return value;
 	}
 }

@@ -1,4 +1,5 @@
 package chopchop.ast ;
+import chopchop.ChopInterp;
 
 /**
  * ...
@@ -23,6 +24,11 @@ class AST
 	{
 		token = T;
 		children = Children;
+	}
+	
+	public function walk(I:ChopInterp):Dynamic
+	{
+		return null;
 	}
 	
 	public function toString():String

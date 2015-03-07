@@ -1,6 +1,7 @@
 package;
 
 import chopchop.ast.AST;
+import chopchop.ChopInterp;
 import chopchop.ChopLexer;
 import chopchop.ChopParser;
 import chopchop.Lexer;
@@ -43,7 +44,12 @@ class Main
 		//lexer = new ChopLexer('if (true) k = 0; else lel = 3;');
 		//lexer = new ChopLexer('while (true) {kek = 3;}');
 		//lexer = new ChopLexer('while (true) kek = 3;');
-		lexer = new ChopLexer('do {kek = 3;} while (true);');
+		//lexer = new ChopLexer('do {kek = 3;} while (true);');
+		//lexer = new ChopLexer('2 + 3');
+		//lexer = new ChopLexer('kek = 2; kek + 3;');
+		lexer = new ChopLexer('kek.lol = 2; kek.lol2.lol3 = 1; kek.lol + kek.lol2.lol3 + 3;');
+		//lexer = new ChopLexer('true && false; true && true;');
+		//lexer = new ChopLexer('3 > 0;');
 		
 		//var token:Token = lexer.nextToken();
 		//while (token.type != Lexer.EOF)
@@ -59,5 +65,9 @@ class Main
 		{
 			trace("\n" + ast.toString());
 		}
+		
+		var interp:ChopInterp = new ChopInterp();
+		interp.setSymbol("kek", { lol: 15, lol2:{lol3:10}} );
+		trace(interp.interpret(parser.ast));
 	}
 }

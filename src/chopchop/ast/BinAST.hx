@@ -14,6 +14,6 @@ class BinAST extends AST
 	{
 		super(T, Children);
 		left = Children[0];
-		right = Children[0];
+		right = Children[1];
 	}
 }

@@ -21,7 +21,8 @@ BTW, it was inspired by Nico's
 [VainLang](http://nicom1.github.io/interpreter/).
 
 # TODO
-* Write an interpeter for the ASTs that the parser constructs
+* Write walk functions for all ASTs
+* Work on interpreter:
 * Fix AST parsing for if statement: makeAST instead of [parseExpr]
 * Make ASTs for:
  * Values: Arrays ([1, 2, 3])
