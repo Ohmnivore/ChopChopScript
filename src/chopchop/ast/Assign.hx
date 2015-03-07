@@ -19,8 +19,9 @@ class Assign extends BinAST
 	{
 		Reflect.setField(left, "isValue", false);
 		var l:Access = cast left.walk(I);
-		Reflect.setProperty(l.oldValue, l.newName, right.walk(I));
+		var val:Dynamic = right.walk(I);
+		Reflect.setProperty(l.oldValue, l.newName, val);
 		
-		return null;
+		return val;
 	}
 }

@@ -29,6 +29,11 @@ class Scope
 		var d:Dynamic = symbols.get(Name);
 		if (d == null && parent != null)
 			return parent.resolve(Name);
+		if (d == null)
+		{
+			d = new Symbol(Name, null);
+			symbols.set(Name, d);
+		}
 		return d;
 	}
 }

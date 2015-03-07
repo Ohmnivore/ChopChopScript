@@ -10,6 +10,9 @@ class ChopInterp
 	public var globalScope:Scope;
 	public var curScope:Scope;
 	
+	public var doContinue:Bool = false;
+	public var doBreak:Bool = false;
+	
 	public function new() 
 	{
 		globalScope = new Scope();
@@ -29,5 +32,16 @@ class ChopInterp
 			lastV = x.walk(this);
 		}
 		return lastV;
+	}
+	
+	public function newScope():Void
+	{
+		var s:Scope = new Scope(curScope);
+		curScope = s;
+	}
+	
+	public function oldScope():Void
+	{
+		curScope = curScope.parent;
 	}
 }

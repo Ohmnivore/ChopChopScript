@@ -1,5 +1,6 @@
 package chopchop.ast;
 
+import chopchop.ChopInterp;
 import chopchop.Token;
 
 /**
@@ -8,11 +9,15 @@ import chopchop.Token;
  */
 class Continue extends AST
 {
-
 	public function new(T:Token, Children:Array<AST>) 
 	{
 		super(T, Children);
-		
 	}
 	
+	override public function walk(I:ChopInterp):Dynamic 
+	{
+		I.doContinue = true;
+		
+		return super.walk(I);
+	}
 }

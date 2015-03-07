@@ -1,5 +1,6 @@
 package chopchop.ast;
 
+import chopchop.ChopInterp;
 import chopchop.Token;
 
 /**
@@ -17,6 +18,37 @@ class While extends AST
 		
 		condition = Condition;
 		body = Body;
+	}
+	
+	override public function walk(I:ChopInterp):Dynamic 
+	{
+		var last:Dynamic = null;
+		var doLoop:Bool = true;
+		while (doLoop && condition.walk(I) == true)
+		{
+			I.newScope();
+			var i:Int = 0;
+			while (i < body.length)
+			{
+				var ast:AST = body[i];
+				last = ast.walk(I);
+				
+				if (I.doContinue)
+				{
+					I.doContinue = false;
+					break;
+				}
+				else if (I.doBreak)
+				{
+					I.doBreak = false;
+					doLoop = false;
+					break;
+				}
+				i++;
+			}
+			I.oldScope();
+		}
+		return last;
 	}
 	
 	override public function toString():String 

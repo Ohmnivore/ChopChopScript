@@ -47,9 +47,12 @@ class Main
 		//lexer = new ChopLexer('do {kek = 3;} while (true);');
 		//lexer = new ChopLexer('2 + 3');
 		//lexer = new ChopLexer('kek = 2; kek + 3;');
-		lexer = new ChopLexer('kek.lol = 2; kek.lol2.lol3 = 1; kek.lol + kek.lol2.lol3 + 3;');
+		//lexer = new ChopLexer('kek.lol = 2; kek.lol2.lol3 = 1; kek.lol + kek.lol2.lol3 + 3;');
 		//lexer = new ChopLexer('true && false; true && true;');
 		//lexer = new ChopLexer('3 > 0;');
+		//lexer = new ChopLexer('if (false || false) 3; else 2;');
+		lexer = new ChopLexer('i = 0; while (true) {i = i + 1; if (i > 3) {break;} else continue ;}');
+		//lexer = new ChopLexer('i = 0; do {i = i + 1;} while (i < 3);');
 		
 		//var token:Token = lexer.nextToken();
 		//while (token.type != Lexer.EOF)

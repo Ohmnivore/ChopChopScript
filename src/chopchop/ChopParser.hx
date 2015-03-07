@@ -1,5 +1,6 @@
 package chopchop;
 import chopchop.ast.*;
+import chopchop.ast.Continue;
 import haxe.ds.GenericStack;
 import haxe.ds.ObjectMap;
 
@@ -132,19 +133,26 @@ class ChopParser extends Parser
 				ret.push(new DoWhile(tok, condition, body));
 			}
 			
-			//Keywords
-			else if (t == ChopLexer.CONTINUE)
+			//Keywords -> moved to parseExpr
+			//else if (t == ChopLexer.CONTINUE)
+			//{
+				//ret.push(new Continue(tok, []));
+			//}
+			//else if (t == ChopLexer.BREAK)
+			//{
+				//ret.push(new Break(tok, []));
+			//}
+			
+			else if (t == ChopLexer.OPEN_CURLY || t == ChopLexer.CLOSE_CURLY ||
+					 t == ChopLexer.OPEN_PAR || t == ChopLexer.CLOSE_PAR)
 			{
-				ret.push(new Continue(tok, []));
-			}
-			else if (t == ChopLexer.BREAK)
-			{
-				ret.push(new Break(tok, []));
+				
 			}
 			
 			else
 			{
 				ret.push(parseExpr(ChopLexer.SEMI_COLON));
+				//ret = ret.concat(makeAST(ChopLexer.SEMI_COLON));
 			}
 			consume();
 		}
@@ -324,6 +332,15 @@ class ChopParser extends Parser
 			else if (t == ChopLexer.NULL)
 			{
 				operandStack.add(new NullV(tok, []));
+			}
+			
+			else if (t == ChopLexer.CONTINUE)
+			{
+				operandStack.add(new Continue(tok, []));
+			}
+			else if (t == ChopLexer.BREAK)
+			{
+				operandStack.add(new Break(tok, []));
 			}
 			
 			else
