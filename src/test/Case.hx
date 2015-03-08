@@ -8,7 +8,7 @@ import chopchop.ast.AST;
  */
 class Case
 {
-	private var f:TestFile;
+	public var f:TestFile;
 	private var executable:String;
 	private var expected:String;
 	
@@ -20,20 +20,26 @@ class Case
 		executable = f.content.substr(firstLine);
 	}
 	
-	public function execute():Void
+	public function execute():Bool
 	{
 		var lexer:ChopLexer = new ChopLexer(executable);
-		checkLexer(lexer);
+		var lexerBuff:String = checkLexer(lexer);
 		var parser:ChopParser = new ChopParser(lexer);
-		checkParser(parser);
+		var parserBuff:String = checkParser(parser);
 		var interp:ChopInterp = new ChopInterp();
 		var v:Dynamic = checkInterp(interp, parser.ast);
 		var expectedV:Dynamic = interp.interpret(oneShot(expected));
 		
 		var ok:Bool = expectedV == v;
-		trace(f.name + ": " + Std.string(ok).toUpperCase() + " | expects: " + expectedV + " | gets: " + v);
+		trace(Std.string(ok).toUpperCase() + ": " + f.name + " | expects: " + expectedV + " | gets: " + v);
+		if (!ok)
+		{
+			trace(lexerBuff);
+			trace(parserBuff);
+		}
 		
 		interp.reset();
+		return ok;
 	}
 	
 	private function oneShot(S:String):Array<AST>
@@ -42,25 +48,26 @@ class Case
 		return new ChopParser(lexer).parse();
 	}
 	
-	private function checkLexer(L:Lexer):Void
+	private function checkLexer(L:Lexer):String
 	{
 		var buffer:String = "";
 		try {
 			var token:Token = L.nextToken();
 			while (token.type != Lexer.EOF)
 			{
-				buffer += token + ", " + L.p;
+				buffer += token + ", " + L.p + "; ";
 				token = L.nextToken();
 			}
-			buffer += token + ", " + L.p;
+			buffer += token + ", " + L.p + "; ";
 		}
 		catch (e:Dynamic) {
 			throw "Lexer error at position " + L.p + ": " + e + "\n" + buffer;
 		}
 		L.reset();
+		return buffer;
 	}
 	
-	private function checkParser(P:ChopParser):Void
+	private function checkParser(P:ChopParser):String
 	{
 		var buffer:String = "";
 		try {
@@ -73,6 +80,7 @@ class Case
 		catch (e:Dynamic) {
 			throw "Parser error at position " + P.p + ": " + e + "\n" + buffer;
 		}
+		return buffer;
 	}
 	
 	private function checkInterp(I:ChopInterp, ast:Array<AST>):Dynamic

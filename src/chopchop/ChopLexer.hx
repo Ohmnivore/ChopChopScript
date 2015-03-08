@@ -220,7 +220,7 @@ class ChopLexer extends Lexer
 			buf += c;
 			consume();
 		}
-		while (isDigit(c) || c == ".");
+		while (c == "." || isDigit(c));
 		if (isInt)
 			return new Token(INT, buf, tokenNames);
 		else

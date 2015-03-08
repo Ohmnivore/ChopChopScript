@@ -7,6 +7,7 @@ package test;
 class Test
 {
 	private var tests:Array<TestFile> = [];
+	private var bad:Array<Case>;
 	
 	public function new(Names:Array<String>, Content:Array<String>) 
 	{
@@ -18,11 +19,19 @@ class Test
 	
 	public function test():Void
 	{
+		bad = [];
 		for (t in tests)
 		{
 			var c:Case = new Case(t);
-			c.execute();
+			if (c.f.content.length > 0)
+			{
+				if (!c.execute())
+					bad.push(c);
+			}
 		}
+		trace(bad.length + " tests failed.");
+		for (c in bad)
+			trace(c.f.name);
 	}
 	
 	private function getValue(S:String):Dynamic

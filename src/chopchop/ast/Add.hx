@@ -15,8 +15,8 @@ class Add extends BinAST
 	
 	override public function walk(I:ChopInterp):Dynamic 
 	{
-		var l:Int = cast left.walk(I);
-		var r:Int = cast right.walk(I);
+		var l:Float = cast left.walk(I);
+		var r:Float = cast right.walk(I);
 		
 		return l + r;
 	}

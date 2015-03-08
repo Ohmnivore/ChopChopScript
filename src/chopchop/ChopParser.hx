@@ -18,7 +18,7 @@ class ChopParser extends Parser
 	{
 		lexer = Input;
 		initOps();
-		super(Input, 2);
+		super(Input, 3);
 	}
 	
 	public function parse():Array<AST>

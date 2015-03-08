@@ -37,46 +37,5 @@ class Main
 		var tests:Test = new Test(CompileTime.getNamesOfFilesInFolder("tests"),
 			CompileTime.getTextOfFilesInFolder("tests"));
 		tests.test();
-		
-		//lexer = new ChopLexer('_test.x = 0;\n_bool2=true;\nstr="test";\na = 2 + 3.5;\nb = 2 - 1;\nc = 2 * 3;\nd = 2 / 0.5;\ne = 4 % 3;');
-		//lexer = new ChopLexer('test1.test.method();\ntest = 2 * (3 + 4);');
-		//lexer = new ChopLexer('3 + 4 * 2 / ( 1 - 5 ) * 2 / 3;');
-		//lexer = new ChopLexer('(3 + 4) * id;');
-		//lexer = new ChopLexer('a = k.lol % 4;');
-		//lexer = new ChopLexer('kek.lol + 4;2 + 3;');
-		//lexer = new ChopLexer('3 * 4 + 5;');
-		//lexer = new ChopLexer('if (kek == 0 && topkek == 1) {lel = 5;toplel=4;} else lel = 3;');
-		//lexer = new ChopLexer('if (true) k = 0; else if (false) kek = 1; else lel = 3;');
-		//lexer = new ChopLexer('if (true) k = 0; else lel = 3;');
-		//lexer = new ChopLexer('while (true) {kek = 3;}');
-		//lexer = new ChopLexer('while (true) kek = 3;');
-		//lexer = new ChopLexer('do {kek = 3;} while (true);');
-		//lexer = new ChopLexer('2 + 3');
-		//lexer = new ChopLexer('kek = 2; kek + 3;');
-		//lexer = new ChopLexer('kek.lol = 2; kek.lol2.lol3 = 1; kek.lol + kek.lol2.lol3 + 3;');
-		//lexer = new ChopLexer('true && false; true && true;');
-		//lexer = new ChopLexer('3 > 0;');
-		//lexer = new ChopLexer('if (false || false) 3; else 2;');
-		//lexer = new ChopLexer('i = 0; while (true) {i = i + 1; if (i > 3) {break;} else continue ;}');
-		//lexer = new ChopLexer('i = 0; do {i = i + 1;} while (i < 3);');
-		
-		//var token:Token = lexer.nextToken();
-		//while (token.type != Lexer.EOF)
-		//{
-			//trace(token, lexer.p);
-			//token = lexer.nextToken();
-		//}
-		//trace(token, lexer.p);
-		
-		//lexer.reset();
-		//parser = new ChopParser(lexer);
-		//for (ast in parser.ast)
-		//{
-			//trace("\n" + ast.toString());
-		//}
-		
-		//var interp:ChopInterp = new ChopInterp();
-		//interp.setSymbol("kek", { lol: 15, lol2:{lol3:10}} );
-		//trace(interp.interpret(parser.ast));
 	}
 }

@@ -23,9 +23,14 @@ BTW, it was inspired by Nico's
 # TODO
 * Handle comments
 * Write tests for all ASTs
+ * AccessField
+ * Assign
+ * BitwiseShiftRightUnsigned -> needs -[value] operator
+ * If
+ * Variable
 * Work on interpreter
 * Make ASTs for:
- * Values: Arrays ([1, 2, 3])
+ * Values: Arrays ([1, 2, 3]), Objects ({field: value})
  * Math ops: -[var], ++[var], [var]++, --[var], [var]--, +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
  * Bitwise ops: ~[var]
  * Boolean ops: ![var]
@@ -40,6 +45,7 @@ BTW, it was inspired by Nico's
 * No string interpolation
 * No array or iterator comprehension (aka [while (i < 10) i++] && for (while (i < 10) i++))
 * No conditional compilation
+* No macros
 
 # REF
 * http://www.amazon.ca/Language-Implementation-Patterns-Domain-Specific-Programming/dp/193435645X
