@@ -1,0 +1,11 @@
+// true
+
+//This is a comment
+
+/*
+This is another comment
+Still the same comment
+Still the same comment...
+*/
+
+true;

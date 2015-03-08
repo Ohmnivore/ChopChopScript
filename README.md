@@ -2,8 +2,7 @@
 ChopChop script is a script language for Haxe that
 is focused on speed. It expects that you have already
 declared all necessary methods and classes in your Haxe
-code, so all it needs to do is call them. It supports
-only very basic operations for quick parsing and execution.
+code, so all it needs to do is call them.
 
 # Why?
 Of course half of this is just me fooling around, but the
@@ -17,8 +16,9 @@ to a Haxe equivalent of the test scripts.
 I plan to maybe use this for a plugin system in one of
 my games.
 
-BTW, it was inspired by Nico's
-[VainLang](http://nicom1.github.io/interpreter/).
+It was inspired by Nico's
+[VainLang](http://nicom1.github.io/interpreter/)
+and the [hscript project](https://github.com/HaxeFoundation/hscript).
 
 # TODO
 * Handle comments (// and /* */)
@@ -34,6 +34,7 @@ BTW, it was inspired by Nico's
  * Keywords: new, for x in, cast, trace
 
 # Notes
+* No type checking
 * No ... operator aka no for (0...10) style loops
 * No class or function definitions
 * No ternary operator (?:)

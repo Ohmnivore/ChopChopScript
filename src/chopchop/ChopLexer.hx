@@ -68,7 +68,28 @@ class ChopLexer extends Lexer
 			tokenNames[Reflect.field(ChopLexer, field)] = field;
 		}
 		
+		Input = removeComments(Input);
 		super(Input);
+	}
+	
+	private function removeComments(S:String):String
+	{
+		var ret:String = S.substr(0);
+		var i:Int = ret.indexOf("//");
+		while (i >= 0)
+		{
+			ret = ret.substring(0, i - 1) + ret.substr(ret.indexOf("\n", i + 2) + 1);
+			i = ret.indexOf("//");
+		}
+		
+		i = ret.indexOf("/*");
+		while (i >= 0)
+		{
+			ret = ret.substring(0, i - 1) + ret.substr(ret.indexOf("*/", i + 2) + 2);
+			i = ret.indexOf("/*");
+		}
+		
+		return ret;
 	}
 	
 	override public function getTokenName(T:Int):String 
