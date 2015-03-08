@@ -78,7 +78,10 @@ class ChopLexer extends Lexer
 		var i:Int = ret.indexOf("//");
 		while (i >= 0)
 		{
-			ret = ret.substring(0, i - 1) + ret.substr(ret.indexOf("\n", i + 2) + 1);
+			var end:Int = ret.indexOf("\n", i + 2);
+			if (end < 0)
+				end = ret.length - 1;
+			ret = ret.substring(0, i - 1) + ret.substr(end + 1);
 			i = ret.indexOf("//");
 		}
 		
@@ -173,7 +176,7 @@ class ChopLexer extends Lexer
 			{
 				return quickConsume(CLOSE_CURLY);
 			}
-			else if (c == ".")
+			else if (c == ",")
 			{
 				return quickConsume(COMMA);
 			}

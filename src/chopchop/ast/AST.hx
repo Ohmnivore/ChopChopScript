@@ -36,7 +36,8 @@ class AST
 		var ret:String = getRep();
 		for (c in children)
 		{
-			ret += AST.indent(c.toString());
+			if (c != null)
+				ret += AST.indent(c.toString());
 		}
 		
 		return ret;

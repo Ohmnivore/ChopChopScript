@@ -21,8 +21,8 @@ It was inspired by Nico's
 and the [hscript project](https://github.com/HaxeFoundation/hscript).
 
 # TODO
-* Handle comments (// and /* */)
 * Write tests for:
+ * Function call -> needs to verify with actual objects
  * AccessField -> needs new to verify with actual objects
  * BitwiseShiftRightUnsigned -> needs -[value] operator
 * Add support for:
@@ -30,8 +30,7 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
  * Math ops: -[var], ++[var], [var]++, --[var], [var]--, +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
  * Bitwise ops: ~[var]
  * Boolean ops: ![var]
- * Function call
- * Keywords: new, for x in, cast, trace
+ * Keywords: new, for x in, cast
 
 # Notes
 * No type checking
@@ -43,6 +42,8 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
 * No array or iterator comprehension (aka [while (i < 10) i++] && for (while (i < 10) i++))
 * No conditional compilation
 * No macros
+* No switches
+* No pattern matching
 
 # REF
 * http://www.amazon.ca/Language-Implementation-Patterns-Domain-Specific-Programming/dp/193435645X

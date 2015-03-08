@@ -27,12 +27,13 @@ class ChopParser extends Parser
 		return ast;
 	}
 	
-	private function addNode(Stack:GenericStack<AST>, T:Token, Ast:Class<AST>):Void
+	private function addNode(Stack:GenericStack<AST>, T:Token, Ast:Class<AST>):AST
 	{
         var rightASTNode:AST = Stack.pop();
 		var leftASTNode:AST = Stack.pop();
 		var ast:AST = Type.createInstance(Ast, [T, [leftASTNode, rightASTNode]]);
         Stack.add(ast);
+		return ast;
     }
 	public function makeAST(Until:Int):Array<AST>
 	{
@@ -159,10 +160,11 @@ class ChopParser extends Parser
 		
 		return ret;
 	}
-	public function parseExpr(Until:Int):AST
+	public function parseExpr(Until:Int, ParseArgs:Bool = false):AST
 	{
 		var operatorStack:GenericStack<AST> = new GenericStack<AST>();
 		var operandStack:GenericStack<AST> = new GenericStack<AST>();
+		var nestLvl:Int = 1;
 		
 		while (LA(1) != Until && LA(1) != Lexer.EOF)
 		{
@@ -175,10 +177,18 @@ class ChopParser extends Parser
 			
 			if (t == ChopLexer.OPEN_PAR)
 			{
+				nestLvl++;
 				operatorStack.add(new ParOpen(tok, []));
 			}
 			else if (t == ChopLexer.CLOSE_PAR)
 			{
+				nestLvl--;
+				if (ParseArgs && nestLvl == 0)
+				{
+					//consume();
+					break;
+				}
+				
 				while (!operatorStack.isEmpty())
 				{
 					var popped:AST = operatorStack.pop();
@@ -307,6 +317,30 @@ class ChopParser extends Parser
 			{
 				handleSimpleOp(AccessField, tok, operatorStack, operandStack);
 			}
+			else if ((t == ChopLexer.VARIABLE || t == ChopLexer.STRING) &&
+				t2 == ChopLexer.OPEN_PAR)
+			{
+				operandStack.add(new Variable(tok, []));
+				var op:FunctionCall = cast handleSimpleOp(FunctionCall, tok, operatorStack, operandStack);
+				consume();
+				consume();
+				
+				if (LA(1) != ChopLexer.CLOSE_PAR)
+				{
+					op.children = [];
+					while (LA(1) != ChopLexer.CLOSE_PAR)
+					{
+						var arg1:AST = parseExpr(ChopLexer.CLOSE_PAR, true);
+						trace(arg1);
+						op.children.push(arg1);
+					}
+				}
+			}
+			else if (ParseArgs && t == ChopLexer.COMMA && nestLvl == 1)
+			{
+				consume();
+				break;
+			}
 			
 			//Values
 			else if (t == ChopLexer.INT)
@@ -352,7 +386,9 @@ class ChopParser extends Parser
 		while (!operatorStack.isEmpty())
 		{
 			var ast:AST = operatorStack.pop();
-            addNode(operandStack, ast.token, Type.getClass(ast));
+            var clone:AST = addNode(operandStack, ast.token,
+				Type.getClass(ast));
+			clone.children = ast.children;
         }
         return operandStack.pop();
 	}
@@ -376,6 +412,7 @@ class ChopParser extends Parser
 		//addOp(new Operator(Substract, false, 2));
 		
 		addOp(new Operator(AccessField, false, 2));
+		addOp(new Operator(FunctionCall, false, 2));
 		
 		addOp(new Operator(Multiply, false, 5));
 		addOp(new Operator(Divide, false, 5));
@@ -409,7 +446,7 @@ class ChopParser extends Parser
 		ops.set(Op.ast, Op);
 	}
 	private function handleSimpleOp(Ast:Class<AST>, T:Token, OperatorStack:GenericStack<AST>,
-		OperandStack:GenericStack<AST>):Void
+		OperandStack:GenericStack<AST>):AST
 	{
 		var o1:Operator = ops.get(Ast);
 		var ast2:AST = OperatorStack.first();
@@ -435,6 +472,8 @@ class ChopParser extends Parser
 			if (ast2 != null)
 				o2 = ops.get(Type.getClass(ast2));
 		}
-		OperatorStack.add(Type.createInstance(Ast, [T, []]));
+		var operator:AST = Type.createInstance(Ast, [T, []]);
+		OperatorStack.add(operator);
+		return operator;
 	}
 }

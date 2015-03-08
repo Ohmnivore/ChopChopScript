@@ -18,10 +18,17 @@ class ChopInterp
 		reset();
 	}
 	
+	private function doTrace(E:Dynamic):Void
+	{
+		haxe.Log.trace(Std.string(E), cast { fileName : "hscript", lineNumber : 0 });
+	}
+	
 	public function reset():Void
 	{
 		globalScope = new Scope();
 		curScope = globalScope;
+		
+		curScope.define("trace", doTrace);
 	}
 	
 	public function setSymbol(Name:String, Value:Dynamic):Void

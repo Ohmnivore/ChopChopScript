@@ -70,26 +70,26 @@ class Case
 	private function checkParser(P:ChopParser):String
 	{
 		var buffer:String = "";
-		try {
+		//try {
 			P.parse();
 			for (ast in P.ast)
 			{
 				buffer += "\n" + ast.toString();
 			}
-		}
-		catch (e:Dynamic) {
-			throw "Parser error at position " + P.p + ": " + e + "\n" + buffer;
-		}
+		//}
+		//catch (e:Dynamic) {
+			//throw "Parser error at position " + P.p + ": " + e + "\n" + buffer;
+		//}
 		return buffer;
 	}
 	
 	private function checkInterp(I:ChopInterp, ast:Array<AST>):Dynamic
 	{
-		try {
+		//try {
 			return I.interpret(ast);
-		}
-		catch (e:Dynamic) {
-			throw "Interpreter error: " + e;
-		}
+		//}
+		//catch (e:Dynamic) {
+			//throw "Interpreter error: " + e;
+		//}
 	}
 }
