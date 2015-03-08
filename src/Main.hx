@@ -9,6 +9,8 @@ import chopchop.Token;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.Lib;
+import test.Test;
+import test.CompileTime;
 
 /**
  * ...
@@ -32,6 +34,10 @@ class Main
 	
 	static public function test():Void
 	{
+		var tests:Test = new Test(CompileTime.getNamesOfFilesInFolder("tests"),
+			CompileTime.getTextOfFilesInFolder("tests"));
+		tests.test();
+		
 		//lexer = new ChopLexer('_test.x = 0;\n_bool2=true;\nstr="test";\na = 2 + 3.5;\nb = 2 - 1;\nc = 2 * 3;\nd = 2 / 0.5;\ne = 4 % 3;');
 		//lexer = new ChopLexer('test1.test.method();\ntest = 2 * (3 + 4);');
 		//lexer = new ChopLexer('3 + 4 * 2 / ( 1 - 5 ) * 2 / 3;');
@@ -62,15 +68,15 @@ class Main
 		//}
 		//trace(token, lexer.p);
 		
-		lexer.reset();
-		parser = new ChopParser(lexer);
-		for (ast in parser.ast)
-		{
-			trace("\n" + ast.toString());
-		}
+		//lexer.reset();
+		//parser = new ChopParser(lexer);
+		//for (ast in parser.ast)
+		//{
+			//trace("\n" + ast.toString());
+		//}
 		
-		var interp:ChopInterp = new ChopInterp();
-		interp.setSymbol("kek", { lol: 15, lol2:{lol3:10}} );
-		trace(interp.interpret(parser.ast));
+		//var interp:ChopInterp = new ChopInterp();
+		//interp.setSymbol("kek", { lol: 15, lol2:{lol3:10}} );
+		//trace(interp.interpret(parser.ast));
 	}
 }

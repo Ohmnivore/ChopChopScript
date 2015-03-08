@@ -15,6 +15,11 @@ class ChopInterp
 	
 	public function new() 
 	{
+		reset();
+	}
+	
+	public function reset():Void
+	{
 		globalScope = new Scope();
 		curScope = globalScope;
 	}

@@ -21,8 +21,8 @@ BTW, it was inspired by Nico's
 [VainLang](http://nicom1.github.io/interpreter/).
 
 # TODO
-* Write walk functions for all ASTs
-* Write tests
+* Handle comments
+* Write tests for all ASTs
 * Work on interpreter
 * Make ASTs for:
  * Values: Arrays ([1, 2, 3])

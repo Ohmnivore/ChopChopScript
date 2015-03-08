@@ -12,15 +12,19 @@ class ChopParser extends Parser
 {
 	public var lexer:ChopLexer;
 	private var ops:ObjectMap<Dynamic, Operator>;
-	public var ast:Array<AST>;
+	public var ast:Array<AST> = [];
 	
 	public function new(Input:ChopLexer) 
 	{
 		lexer = Input;
 		initOps();
 		super(Input, 2);
-		
+	}
+	
+	public function parse():Array<AST>
+	{
 		ast = makeAST(Lexer.EOF);
+		return ast;
 	}
 	
 	private function addNode(Stack:GenericStack<AST>, T:Token, Ast:Class<AST>):Void
