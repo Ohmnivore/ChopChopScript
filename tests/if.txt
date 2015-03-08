@@ -1,0 +1,18 @@
+// true
+if (false)
+	;
+else if (true)
+{
+	true;
+}
+else if (false)
+	;
+else
+{
+	if (false)
+	{
+		false;
+	}
+	else
+		;
+}

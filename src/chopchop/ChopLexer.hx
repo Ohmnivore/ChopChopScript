@@ -186,6 +186,7 @@ class ChopLexer extends Lexer
 			}
 			else if (isQuote(c))
 			{
+				consume();
 				return STR();
 			}
 			else if (isDigit(c))
@@ -292,7 +293,6 @@ class ChopLexer extends Lexer
 			consume();
 		}
 		while (c != '"');
-		buf += c;
 		consume();
 		
 		return new Token(STRING, buf, tokenNames);

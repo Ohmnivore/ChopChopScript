@@ -21,15 +21,11 @@ BTW, it was inspired by Nico's
 [VainLang](http://nicom1.github.io/interpreter/).
 
 # TODO
-* Handle comments
-* Write tests for all ASTs
- * AccessField
- * Assign
+* Handle comments (// and /* */)
+* Write tests for:
+ * AccessField -> needs new to verify with actual objects
  * BitwiseShiftRightUnsigned -> needs -[value] operator
- * If
- * Variable
-* Work on interpreter
-* Make ASTs for:
+* Add support for:
  * Values: Arrays ([1, 2, 3]), Objects ({field: value})
  * Math ops: -[var], ++[var], [var]++, --[var], [var]--, +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
  * Bitwise ops: ~[var]

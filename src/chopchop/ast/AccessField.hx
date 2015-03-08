@@ -19,15 +19,29 @@ class AccessField extends BinAST
 	
 	override public function walk(I:ChopInterp):Dynamic 
 	{
-		if (isValue)
+		if (Std.is(left, Variable) || Std.is(left, AccessField))
 		{
-			Reflect.setField(left, "isValue", true);
-			return Reflect.getProperty(left.walk(I), right.token.text);
+			if (isValue)
+			{
+				Reflect.setField(left, "isValue", true);
+				return Reflect.getProperty(left.walk(I), right.token.text);
+			}
+			else
+			{
+				Reflect.setField(left, "isValue", true);
+				return new Access(left.walk(I), right.token.text);
+			}
 		}
 		else
 		{
-			Reflect.setField(left, "isValue", true);
-			return new Access(left.walk(I), right.token.text);
+			if (isValue)
+			{
+				return Reflect.getProperty(left.walk(I), right.token.text);
+			}
+			else
+			{
+				return new Access(left.walk(I), right.token.text);
+			}
 		}
 	}
 }

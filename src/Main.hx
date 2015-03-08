@@ -29,9 +29,6 @@ class Main
 		test();
 	}
 	
-	static private var lexer:ChopLexer;
-	static private var parser:ChopParser;
-	
 	static public function test():Void
 	{
 		var tests:Test = new Test(CompileTime.getNamesOfFilesInFolder("tests"),
