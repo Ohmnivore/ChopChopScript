@@ -331,7 +331,6 @@ class ChopParser extends Parser
 					while (LA(1) != ChopLexer.CLOSE_PAR)
 					{
 						var arg1:AST = parseExpr(ChopLexer.CLOSE_PAR, true);
-						trace(arg1);
 						op.children.push(arg1);
 					}
 				}

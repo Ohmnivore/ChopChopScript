@@ -22,6 +22,21 @@ class ChopInterp
 	{
 		haxe.Log.trace(Std.string(E), cast { fileName : "hscript", lineNumber : 0 });
 	}
+	private function doNew(Cl:String, Args:Array<Dynamic>):Dynamic
+	{
+		var c:Class<Dynamic> = Type.resolveClass(Cl);
+		if (c == null) c = curScope.resolve(Cl).value;
+		return Type.createInstance(c, Args);
+	}
+	private function doCast<T:Dynamic>(V:Dynamic, To:Class<T>):T
+	{
+		if(Std.is(V, To))
+		{
+			var ret:T = cast V;
+			return ret;
+		}
+		return null;
+	}
 	
 	public function reset():Void
 	{

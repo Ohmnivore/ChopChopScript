@@ -208,10 +208,15 @@ class ChopLexer extends Lexer
 			{
 				return quickConsume(COMPLEMENT);
 			}
-			else if (isQuote(c))
+			else if (c == '"')
 			{
 				consume();
-				return STR();
+				return STR('"');
+			}
+			else if (c == "'")
+			{
+				consume();
+				return STR("'");
 			}
 			else if (isDigit(c))
 			{
@@ -302,11 +307,11 @@ class ChopLexer extends Lexer
 			code >= 'A'.charCodeAt(0) && code <= 'Z'.charCodeAt(0);
 	}
 	
-	private function isQuote(S:String):Bool
-	{
-		return S == '"';
-	}
-	private function STR():Token
+	//private function isQuote(S:String):Bool
+	//{
+		//return S == '"';
+	//}
+	private function STR(Delim:String):Token
 	{
 		var buf:String = "";
 		do
@@ -316,7 +321,7 @@ class ChopLexer extends Lexer
 			buf += c;
 			consume();
 		}
-		while (c != '"');
+		while (c != Delim);
 		consume();
 		
 		return new Token(STRING, buf, tokenNames);
