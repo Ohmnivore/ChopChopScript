@@ -11,9 +11,9 @@ class ConstAST extends AST
 {
 	public var value:Dynamic;
 	
-	public function new(T:Token, Children:Array<AST>) 
+	public function new(Text:String, Children:Array<AST>) 
 	{
-		super(T, Children);
+		super(Text, Children);
 		setValue();
 	}
 	

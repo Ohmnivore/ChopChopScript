@@ -9,14 +9,14 @@ import chopchop.Token;
  */
 class BoolV extends ConstAST
 {
-	public function new(T:Token, Children:Array<AST>) 
+	public function new(Text:String, Children:Array<AST>) 
 	{
-		super(T, Children);
+		super(Text, Children);
 	}
 	
 	override function setValue():Void 
 	{
-		if (token.text == "true")
+		if (text == "true")
 			value = true;
 		else
 			value = false;

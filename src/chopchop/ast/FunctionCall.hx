@@ -9,9 +9,9 @@ import chopchop.Symbol;
  */
 class FunctionCall extends BinAST
 {
-	public function new(T:Token, Children:Array<AST>) 
+	public function new(Text:String, Children:Array<AST>) 
 	{
-		super(T, Children);
+		super(Text, Children);
 	}
 	
 	override public function walk(I:ChopInterp):Dynamic 
@@ -30,13 +30,13 @@ class FunctionCall extends BinAST
 		}
 		else if (Std.is(right, Variable))
 		{
-			var s:Symbol = I.curScope.resolve(token.text);
+			var s:Symbol = I.curScope.resolve(text);
 			return Reflect.callMethod(s, Reflect.field(s, "value"), args);
 		}
 		else
 		{
 			var r:Dynamic = right.walk(I);
-			return Reflect.callMethod(r, token.text, args);
+			return Reflect.callMethod(r, text, args);
 		}
 	}
 }

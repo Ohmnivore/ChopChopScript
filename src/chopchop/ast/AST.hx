@@ -7,7 +7,7 @@ import chopchop.ChopInterp;
  */
 class AST
 {
-	public var token:Token;
+	public var text:String;
 	public var children:Array<AST> = [];
 	
 	private static function indent(S:String):String
@@ -20,9 +20,9 @@ class AST
 		return ret;
 	}
 	
-	public function new(T:Token, Children:Array<AST>)
+	public function new(Text:String, Children:Array<AST>)
 	{
-		token = T;
+		text = Text;
 		children = Children;
 	}
 	
@@ -45,6 +45,6 @@ class AST
 	private function getRep():String
 	{
 		var className:String = Type.getClassName(Type.getClass(this));
-		return token.text + " : " + className.substr(className.lastIndexOf(".") + 1);
+		return text + " : " + className.substr(className.lastIndexOf(".") + 1);
 	}
 }

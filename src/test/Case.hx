@@ -26,6 +26,7 @@ class Case
 		var lexerBuff:String = checkLexer(lexer);
 		var parser:ChopParser = new ChopParser(lexer);
 		var parserBuff:String = checkParser(parser);
+		trace(parserBuff);
 		var interp:ChopInterp = new ChopInterp();
 		var v:Dynamic = checkInterp(interp, parser.ast);
 		var expectedV:Dynamic = interp.interpret(oneShot(expected));

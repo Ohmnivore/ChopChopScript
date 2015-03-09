@@ -8,13 +8,13 @@ import chopchop.Token;
  */
 class IntV extends ConstAST
 {
-	public function new(T:Token, Children:Array<AST>) 
+	public function new(Text:String, Children:Array<AST>) 
 	{
-		super(T, Children);
+		super(Text, Children);
 	}
 	
 	override function setValue():Void 
 	{
-		value = Std.parseInt(token.text);
+		value = Std.parseInt(text);
 	}
 }

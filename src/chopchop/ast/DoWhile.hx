@@ -11,9 +11,9 @@ class DoWhile extends While
 {
 	private var last:Dynamic = null;
 	
-	public function new(T:Token, Condition:AST, Body:Array<AST>) 
+	public function new(Text:String, Condition:AST, Body:Array<AST>) 
 	{
-		super(T, Condition, Body);
+		super(Text, Condition, Body);
 	}
 	
 	override public function walk(I:ChopInterp):Dynamic 

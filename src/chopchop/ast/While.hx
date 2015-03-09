@@ -12,9 +12,9 @@ class While extends AST
 	public var condition:AST;
 	public var body:Array<AST>;
 	
-	public function new(T:Token, Condition:AST, Body:Array<AST>) 
+	public function new(Text:String, Condition:AST, Body:Array<AST>) 
 	{
-		super(T, []);
+		super(Text, []);
 		
 		condition = Condition;
 		body = Body;

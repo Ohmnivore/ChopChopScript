@@ -1,6 +1,5 @@
 package chopchop.ast;
 
-import chopchop.ast.AccessField.Access;
 import chopchop.ChopInterp;
 import chopchop.Token;
 
@@ -8,10 +7,8 @@ import chopchop.Token;
  * ...
  * @author Ohmnivore
  */
-class Variable extends AST
+class Constructor extends BinAST
 {
-	public var isValue:Bool = true;
-	
 	public function new(Text:String, Children:Array<AST>) 
 	{
 		super(Text, Children);
@@ -19,9 +16,14 @@ class Variable extends AST
 	
 	override public function walk(I:ChopInterp):Dynamic 
 	{
-		if (isValue)
-			return I.curScope.resolve(text).value;
-		else
-			return new Access(I.curScope.resolve(text), "value");
+		var args:Array<Dynamic> = [];
+		for (arg in children)
+		{
+			args.push(arg.walk(I));
+		}
+		
+		var ret:Dynamic = Type.createInstance(Type.resolveClass(right.text), args);
+		trace(right.text, ret);
+		return ret;
 	}
 }

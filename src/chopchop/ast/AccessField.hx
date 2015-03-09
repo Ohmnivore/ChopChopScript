@@ -12,9 +12,9 @@ class AccessField extends BinAST
 {
 	public var isValue:Bool = true;
 	
-	public function new(T:Token, Children:Array<AST>) 
+	public function new(Text:String, Children:Array<AST>) 
 	{
-		super(T, Children);
+		super(Text, Children);
 	}
 	
 	override public function walk(I:ChopInterp):Dynamic 
@@ -24,23 +24,23 @@ class AccessField extends BinAST
 			if (isValue)
 			{
 				Reflect.setField(left, "isValue", true);
-				return Reflect.getProperty(left.walk(I), right.token.text);
+				return Reflect.getProperty(left.walk(I), right.text);
 			}
 			else
 			{
 				Reflect.setField(left, "isValue", true);
-				return new Access(left.walk(I), right.token.text);
+				return new Access(left.walk(I), right.text);
 			}
 		}
 		else
 		{
 			if (isValue)
 			{
-				return Reflect.getProperty(left.walk(I), right.token.text);
+				return Reflect.getProperty(left.walk(I), right.text);
 			}
 			else
 			{
-				return new Access(left.walk(I), right.token.text);
+				return new Access(left.walk(I), right.text);
 			}
 		}
 	}

@@ -8,15 +8,15 @@ import chopchop.Token;
  */
 class Add extends BinAST
 {
-	public function new(T:Token, Children:Array<AST>) 
+	public function new(Text:String, Children:Array<AST>) 
 	{
-		super(T, Children);
+		super(Text, Children);
 	}
 	
 	override public function walk(I:ChopInterp):Dynamic 
 	{
-		var l:Dynamic = cast left.walk(I);
-		var r:Dynamic = cast right.walk(I);
+		var l:Dynamic = left.walk(I);
+		var r:Dynamic = right.walk(I);
 		
 		return l + r;
 	}

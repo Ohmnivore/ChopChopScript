@@ -30,7 +30,7 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
  * Math ops: -[var], ++[var], [var]++, --[var], [var]--, +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
  * Bitwise ops: ~[var]
  * Boolean ops: ![var]
- * Keywords: new, for x in, cast
+ * Keywords: new, for x in
 
 # Notes
 * No type checking
@@ -44,6 +44,7 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
 * No macros
 * No switches
 * No pattern matching
+* No need for type casting
 
 # REF
 * http://www.amazon.ca/Language-Implementation-Patterns-Domain-Specific-Programming/dp/193435645X

@@ -13,9 +13,9 @@ class If extends AST
 	public var ifTrue:Array<AST>;
 	public var ifFalse:Array<AST>;
 	
-	public function new(T:Token, Condition:AST, IfTrue:Array<AST>, IfFalse:Array<AST>) 
+	public function new(Text:String, Condition:AST, IfTrue:Array<AST>, IfFalse:Array<AST>) 
 	{
-		super(T, []);
+		super(Text, []);
 		
 		condition = Condition;
 		ifTrue = IfTrue;

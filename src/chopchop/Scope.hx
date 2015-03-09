@@ -26,10 +26,14 @@ class Scope
 	
 	public function resolve(Name:String):Symbol
 	{
-		var d:Dynamic = symbols.get(Name);
+		var d:Symbol = symbols.get(Name);
 		if (d == null && parent != null)
 			return parent.resolve(Name);
 		if (d == null)
+		{
+			d = new Symbol(Name, Type.resolveClass(Name));
+		}
+		if (d.value == null)
 		{
 			d = new Symbol(Name, null);
 			symbols.set(Name, d);
