@@ -27,10 +27,9 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
  * BitwiseShiftRightUnsigned -> needs -[value] operator
 * Add support for:
  * Values: Arrays ([1, 2, 3]), Objects ({field: value})
- * Math ops: -[var], ++[var], [var]++, --[var], [var]--, +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
- * Bitwise ops: ~[var]
- * Boolean ops: ![var]
+ * Math ops: ++[var], [var]++, --[var], [var]--, +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
  * Keywords: new, for x in
+ * Function calling
 
 # Notes
 * No type checking
