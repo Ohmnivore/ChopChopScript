@@ -1,38 +1,47 @@
 package;
-
-import chopchop.ast.AST;
-import chopchop.ChopInterp;
-import chopchop.ChopLexer;
-import chopchop.ChopParser;
-import chopchop.Lexer;
-import chopchop.Token;
-import flash.display.StageAlign;
-import flash.display.StageScaleMode;
-import flash.Lib;
-import test.Test;
-import test.CompileTime;
-
+import script.ast.AST;
+import script.Lexer;
+import script.ScriptLexer;
+import script.ScriptParser;
+import script.Token;
+//import test.Test;
+//import test.CompileTime;
 /**
- * ...
- * @author Ohmnivore
- */
-
-class Main 
+* ...
+* @author Ohmnivore
+*/
+class Main
 {
-	static function main() 
+    static function main()
+    {
+        //var lexer:ScriptLexer = new ScriptLexer('hi = "TEST"; hi.charAt(); hi.charAt(0); hi.charAt(1, 2, 3, 4, 5);');
+        //var lexer:ScriptLexer = new ScriptLexer('1 * (2 + 3);');
+        var lexer:ScriptLexer = new ScriptLexer('(2 + 3) * 4;');
+        
+        var token:Token = lexer.nextToken();
+        trace(token);
+  		while (token.type != Lexer.EOF)
+        {
+            token = lexer.nextToken();
+            trace(token);
+        }
+            
+        lexer.reset();
+        var parser:ScriptParser = new ScriptParser(lexer);
+        var asts:Array<AST> = parser.parse();
+		for (a in asts)
+			trace(a);
+        
+        //test();
+    }
+	static private function traceAST(A:AST):Void
 	{
-		var stage = Lib.current.stage;
-		stage.scaleMode = StageScaleMode.NO_SCALE;
-		stage.align = StageAlign.TOP_LEFT;
-		// entry point
-		
-		test();
+		trace(A);
 	}
-	
-	static public function test():Void
-	{
-		var tests:Test = new Test(CompileTime.getNamesOfFilesInFolder("tests"),
-			CompileTime.getTextOfFilesInFolder("tests"));
-		tests.test();
-	}
+    static public function test():Void
+    {
+        //var tests:Test = new Test(CompileTime.getNamesOfFilesInFolder("tests"),
+        //CompileTime.getTextOfFilesInFolder("tests"));
+        //tests.test();
+    }
 }
