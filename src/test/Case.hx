@@ -1,6 +1,6 @@
 package test;
-import chopchop.*;
-import chopchop.ast.AST;
+import script.*;
+import script.ast.AST;
 
 /**
  * ...
@@ -22,13 +22,13 @@ class Case
 	
 	public function execute():Bool
 	{
-		var lexer:ChopLexer = new ChopLexer(executable);
+		var lexer:ScriptLexer = new ScriptLexer(executable);
 		var lexerBuff:String = checkLexer(lexer);
 		//trace(lexerBuff);
-		var parser:ChopParser = new ChopParser(lexer);
+		var parser:ScriptParser = new ScriptParser(lexer);
 		var parserBuff:String = checkParser(parser);
 		//trace(parserBuff);
-		var interp:ChopInterp = new ChopInterp();
+		var interp:ScriptInterp = new ScriptInterp();
 		var v:Dynamic = checkInterp(interp, parser.ast);
 		var expectedV:Dynamic = interp.interpret(oneShot(expected));
 		
@@ -46,8 +46,8 @@ class Case
 	
 	private function oneShot(S:String):Array<AST>
 	{
-		var lexer:ChopLexer = new ChopLexer(S);
-		return new ChopParser(lexer).parse();
+		var lexer:ScriptLexer = new ScriptLexer(S);
+		return new ScriptParser(lexer).parse();
 	}
 	
 	private function checkLexer(L:Lexer):String
@@ -69,7 +69,7 @@ class Case
 		return buffer;
 	}
 	
-	private function checkParser(P:ChopParser):String
+	private function checkParser(P:ScriptParser):String
 	{
 		var buffer:String = "";
 		//try {
@@ -85,7 +85,7 @@ class Case
 		return buffer;
 	}
 	
-	private function checkInterp(I:ChopInterp, ast:Array<AST>):Dynamic
+	private function checkInterp(I:ScriptInterp, ast:Array<AST>):Dynamic
 	{
 		//try {
 			return I.interpret(ast);

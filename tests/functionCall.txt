@@ -1,6 +1,2 @@
-// "lo"
-//"lol".toUpperCase();
-//trace("tracing test");
-//"lol".substring(0, 2);
-//"lol".charAt(0);
-"lo";
+// "h"
+"hello".charAt(0);

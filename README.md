@@ -22,21 +22,18 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
 
 # TODO
 * Write tests for:
- * Function call -> needs to verify with actual objects
- * AccessField -> needs new to verify with actual objects
  * BitwiseShiftRightUnsigned -> needs -[value] operator
 * Add support for:
- * Values: Arrays ([1, 2, 3]), Objects ({field: value})
- * Math ops: ++[var], [var]++, --[var], [var]--, +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
- * Keywords: new, for x in
- * Function calling
+ * Values: Objects ({field: value})
+ * Math ops: +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
+ * Keywords: for (x in)
+ * Ops: array[x]
 
 # Notes
 * No type checking
 * No ... operator aka no for (0...10) style loops
 * No class or function definitions
 * No ternary operator (?:)
-* No hex int declaration (aka 0xF)
 * No string interpolation
 * No array or iterator comprehension (aka [while (i < 10) i++] && for (while (i < 10) i++))
 * No conditional compilation

@@ -1,2 +1,2 @@
-// 3
-"lol".length;
+// 5
+"hello".length;

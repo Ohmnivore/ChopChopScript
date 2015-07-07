@@ -1,3 +1,2 @@
-// "testtest2"
-// new String("test") + new String("test2");
-"testtest2";
+// "hello"
+new String("hello");

@@ -6,8 +6,8 @@ package test;
  */
 class Test
 {
-	private var tests:Array<TestFile> = [];
-	private var bad:Array<Case>;
+	public var tests:Array<TestFile> = [];
+	public var bad:Array<Case>;
 	
 	public function new(Names:Array<String>, Content:Array<String>) 
 	{

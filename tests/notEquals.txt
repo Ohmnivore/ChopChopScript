@@ -1,2 +1,0 @@
-// false
-(4 != 4) || (true != true) || ("test" != "test");
