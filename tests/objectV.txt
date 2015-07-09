@@ -1,0 +1,2 @@
+// 5
+{kek: 3, lel: 4, wat: {js: 5}}.wat.js;

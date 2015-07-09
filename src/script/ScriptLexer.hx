@@ -8,6 +8,7 @@ class ScriptLexer extends Lexer
 {
 	//SYNTAX
 	public static var SEMI_COLON:Int = Lexer.getID();
+	public static var COLON:Int = Lexer.getID();
 	public static var VARIABLE:Int = Lexer.getID();
 	public static var FIELD_ACCESSSOR:Int = Lexer.getID();
 	public static var OPEN_PAR:Int = Lexer.getID();
@@ -122,6 +123,10 @@ class ScriptLexer extends Lexer
 			else if (c == ";")
 			{
 				return quickConsume(SEMI_COLON);
+			}
+			else if (c == ":")
+			{
+				return quickConsume(COLON);
 			}
 			else if (c == "+")
 			{

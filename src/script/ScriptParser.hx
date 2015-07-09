@@ -149,7 +149,7 @@ class ScriptParser extends Parser
 		{
 			handleOpenPar(ParOpen, tok.text, operatorStack, operandStack);
 		}
-		else if (t == ScriptLexer.CLOSE_PAR || t == ScriptLexer.CLOSE_BRACK)
+		else if (t == ScriptLexer.CLOSE_PAR || t == ScriptLexer.CLOSE_BRACK || t == ScriptLexer.CLOSE_CURLY)
 		{
 			handleClosePar(ParClose, tok.text, operatorStack, operandStack);
 		}
@@ -236,6 +236,19 @@ class ScriptParser extends Parser
 			handleFunction(ArrayV, "ARRAY", isEmpty, operatorStack, operandStack);
 			
 			handleOpenPar(ParOpen, tok.text, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.OPEN_CURLY)
+		{
+			var isEmpty:Bool = false;
+			if (t2 == ScriptLexer.CLOSE_CURLY)
+				isEmpty = true;
+			handleFunction(ObjectV, "OBJECT", isEmpty, operatorStack, operandStack);
+			
+			handleOpenPar(ParOpen, tok.text, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.COLON)
+		{
+			handleOperator(FieldID, tok.text, operatorStack, operandStack);
 		}
 		
 		else

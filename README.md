@@ -21,13 +21,19 @@ It was inspired by Nico's
 and the [hscript project](https://github.com/HaxeFoundation/hscript).
 
 # TODO
-* Write tests for:
- * BitwiseShiftRightUnsigned -> needs -[value] operator
 * Add support for:
- * Values: Objects ({field: value})
+ * Values: null
+ * Essential math ops: /, %, 
  * Math ops: +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
- * Keywords: for (x in)
+ * Comp ops: >, >=, <, <=, ==, !=
+ * Bitwise ops: ~, &, |, >>, <<, >>>, ^
+ * Bool ops: ||, !
+ * Keywords: for (x in y), break, do, while, if
  * Ops: array[x]
+ * Priority:
+	* if
+	* array[x]
+	* for (x in y)
 
 # Notes
 * No type checking
