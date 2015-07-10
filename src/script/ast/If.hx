@@ -22,9 +22,37 @@ class If extends AST
 	{
 		var cond:AST = children[0];
 		var block:AST = children[1];
+		var theRest:Array<AST> = children.slice(2, children.length);
 		
 		if (cond.walk(I) == true)
 			return block.walk(I);
+		else
+		{
+			var i:Int = 0;
+			while (i < theRest.length)
+			{
+				var a1:AST = theRest[i];
+				var a2:AST = null;
+				if (i < theRest.length + 1)
+					a2 = theRest[i + 1];
+				if (Type.getClass(a1) == Condition)
+				{
+					if (a1.walk(I) == true)
+					{
+						return a2.walk(I);
+					}
+					else
+					{
+						i++;
+					}
+				}
+				else
+				{
+					return a1.walk(I);
+				}
+				i++;
+			}
+		}
 		return null;
 	}
 }

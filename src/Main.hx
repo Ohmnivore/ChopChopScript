@@ -21,6 +21,7 @@ class Main
 		//var lexer:ScriptLexer = new ScriptLexer('(1 + 2) * 3;');
 		//var lexer:ScriptLexer = new ScriptLexer('if (true) {2 + 3; 1 + 2 * 3;} kek = 10;');
 		//var lexer:ScriptLexer = new ScriptLexer('[[0, 1, 2], [3, 4, 5]][1][2];');
+		//var lexer:ScriptLexer = new ScriptLexer('if (true) {} else if (false) {} else {}');
         //
         //var parser:ScriptParser = new ScriptParser(lexer);
         //var asts:Array<AST> = parser.parse();

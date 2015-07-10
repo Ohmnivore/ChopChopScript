@@ -23,16 +23,16 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
 # TODO
 * Add support for:
  * Values: null
- * Essential math ops: /, %, 
+ * Essential math ops: /, %
  * Math ops: +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
  * Comp ops: >, >=, <, <=, ==, !=
  * Bitwise ops: ~, &, |, >>, <<, >>>, ^
  * Bool ops: ||, !
- * Keywords: for (x in y), break, do, while, for (x; x > y; x++), else, else if
+ * Keywords: for (x in y), break, do, while, for (x; x > y; x++), continue
  * Priority:
-	* else, else if
+	* while
+	* break, continue
 	* for (x in y)
-	* break
 	* for (x; x > y; x++)
 
 # Notes
@@ -49,6 +49,7 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
 * No need for type casting
 
 # REF
+* https://en.wikipedia.org/wiki/Shunting-yard_algorithm
 * http://www.amazon.ca/Language-Implementation-Patterns-Domain-Specific-Programming/dp/193435645X
 * http://rosettacode.org/wiki/Parsing/Shunting-yard_algorithm
 * https://www.klittlepage.com/2013/12/22/twelve-days-2013-shunting-yard-algorithm/

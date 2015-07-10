@@ -1,6 +1,14 @@
 // 10
 ret = 0;
-if (true)
+if (false)
+{
+	ret = 2;
+}
+else if (false)
+{
+	ret = 5;
+}
+else
 {
 	ret = 10;
 }

@@ -171,6 +171,22 @@ class ScriptParser extends Parser
 			handleOpenPar(ParOpen, tok.text, operatorStack, operandStack);
 			consume();
 		}
+		else if (t == ScriptLexer.ELSE && t2 != ScriptLexer.IF)
+		{
+			addArgCount(If, operatorStack, operandStack);
+			handleFunction(Block, "BLOCK", true, operatorStack, operandStack);
+			handleOpenPar(ParOpen, tok.text, operatorStack, operandStack);
+			consume();
+		}
+		else if (t == ScriptLexer.ELSE && t2 == ScriptLexer.IF)
+		{
+			consume();
+			addArgCount(If, operatorStack, operandStack);
+			addArgCount(If, operatorStack, operandStack);
+			handleFunction(Condition, "CONDITION", false, operatorStack, operandStack);
+			handleOpenPar(ParOpen, tok.text, operatorStack, operandStack);
+			consume();
+		}
 		else if (t == ScriptLexer.CLOSE_PAR && t2 == ScriptLexer.OPEN_CURLY)
 		{
 			handleClosePar(ParClose, tok.text, operatorStack, operandStack);
@@ -389,6 +405,20 @@ class ScriptParser extends Parser
 			if (OperatorStack.length == 0)
 				throw("Mismatched parantheses or misplaced comma");
 			OutStack.add(OperatorStack.pop());
+		}
+	}
+	private function addArgCount(Target:Class<AST>, OperatorStack:Stack<AST>, OutStack:Stack<AST>):Void
+	{
+		var k:Int = OperatorStack.length - 1;
+		while (k >= 0)
+		{
+			var o:AST = OperatorStack.arr[k];
+			if (Type.getClass(o) == Target)
+			{
+				o.argCount++;
+				break;
+			}
+			k--;
 		}
 	}
 	private function handleOperand(Ast:Class<AST>, Text:String, OperatorStack:Stack<AST>, OutStack:Stack<AST>):Void
