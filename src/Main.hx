@@ -19,7 +19,8 @@ class Main
 		//var lexer:ScriptLexer = new ScriptLexer('f();');
 		//var lexer:ScriptLexer = new ScriptLexer('a.f(b.f(1 * 3), 2, f());');
 		//var lexer:ScriptLexer = new ScriptLexer('(1 + 2) * 3;');
-        
+		//var lexer:ScriptLexer = new ScriptLexer('if (true) {2 + 3; 1 + 2 * 3;} kek = 10;');
+        //
         //var parser:ScriptParser = new ScriptParser(lexer);
         //var asts:Array<AST> = parser.parse();
 		//for (a in asts)

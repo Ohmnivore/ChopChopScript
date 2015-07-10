@@ -10,6 +10,7 @@ class Parser
 	public var lookAhead:Array<Token> = [];
 	public var k:Int;
 	public var p:Int = 0;
+	public var lastToken:Token;
 	
 	public function new(Input:Lexer, K:Int) 
 	{
@@ -36,6 +37,8 @@ class Parser
 	
 	public function consume():Void
 	{
+		if (lookAhead.length > 0)
+			lastToken = lookAhead[0];
 		lookAhead[p] = input.nextToken();
 		p = (p + 1) % k;
 	}

@@ -32,6 +32,7 @@ class Scope
 		if (d == null)
 		{
 			d = new Symbol(Name, Type.resolveClass(Name));
+			symbols.set(Name, d);
 		}
 		if (d.value == null)
 		{

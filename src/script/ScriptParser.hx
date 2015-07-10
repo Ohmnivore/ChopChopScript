@@ -5,6 +5,7 @@ class ScriptParser extends Parser
 {
 	public var lexer:ScriptLexer;
 	public var ast:Array<AST> = [];
+	private var nestLVL:Int = 0;
 	
 	public function new(Input:ScriptLexer) 
 	{
@@ -16,6 +17,7 @@ class ScriptParser extends Parser
 	
 	public function parse():Array<AST>
 	{
+		nestLVL = 0;
 		ast = makeAST(Lexer.EOF);
 		return ast;
 	}
@@ -67,7 +69,7 @@ class ScriptParser extends Parser
 		var operandStack:Stack<AST> = new Stack<AST>();
 		var first:Bool = true;
 		
-		while (LA(1) != Until && LA(1) != Lexer.EOF)
+		while (!(LA(1) == Until && nestLVL == 0) && LA(1) != Lexer.EOF)
 		{
 			var t:Int = LA(1);
 			var tok:Token = LT(1);
@@ -75,6 +77,13 @@ class ScriptParser extends Parser
 			var tok2:Token = LT(2);
 			var t3:Int = LA(3);
 			var tok3:Token = LT(3);
+			
+			if (nestLVL == 1 && t == ScriptLexer.SEMI_COLON && t2 == ScriptLexer.CLOSE_CURLY)
+			{
+				parseSimple(operatorStack, operandStack);
+				handleClosePar(ParClose, tok2.text, operatorStack, operandStack);
+				break;
+			}
 			
 			//Unary ops
 			if (matchPrefix(first, t, t2, ScriptLexer.MINUS))
@@ -90,6 +99,22 @@ class ScriptParser extends Parser
 			}
 			first = false;
 		}
+		
+		for (a in operandStack.arr)
+		{
+			if (a.isOperator || a.canNest)
+				trace(a, a.argCount);
+			else
+				trace(a);
+		}
+		for (a in operatorStack.arr)
+		{
+			if (a.isOperator || a.canNest)
+				trace(a, a.argCount);
+			else
+				trace(a);
+		}
+		
 		// When there are no more tokens to read:
 		// While there are still operator tokens in the stack:
 		// Pop the operator onto the output queue.
@@ -100,13 +125,6 @@ class ScriptParser extends Parser
 				throw("Mismatched parantheses");
 			operandStack.add(operatorStack.pop());
 		}
-		//for (a in operandStack.arr)
-		//{
-			//if (a.isOperator || a.canNest)
-				//trace(a, a.argCount);
-			//else
-				//trace(a);
-		//}
 		
 		//Make tree
 		var i:Int = 0;
@@ -145,7 +163,23 @@ class ScriptParser extends Parser
 		var t4:Int = LA(4);
 		var tok4:Token = LT(4);
 		
-		if (t == ScriptLexer.OPEN_PAR)
+		//Flow
+		if (t == ScriptLexer.IF)
+		{
+			handleOperator(If, tok.text, operatorStack, operandStack);
+			handleFunction(Condition, "CONDITION", false, operatorStack, operandStack);
+			handleOpenPar(ParOpen, tok.text, operatorStack, operandStack);
+			consume();
+		}
+		else if (t == ScriptLexer.CLOSE_PAR && t2 == ScriptLexer.OPEN_CURLY)
+		{
+			handleClosePar(ParClose, tok.text, operatorStack, operandStack);
+			handleFunction(Block, "BLOCK", true, operatorStack, operandStack);
+			handleOpenPar(ParOpen, tok.text, operatorStack, operandStack);
+			consume();
+		}
+		
+		else if (t == ScriptLexer.OPEN_PAR)
 		{
 			handleOpenPar(ParOpen, tok.text, operatorStack, operandStack);
 		}
@@ -250,10 +284,17 @@ class ScriptParser extends Parser
 		{
 			handleOperator(FieldID, tok.text, operatorStack, operandStack);
 		}
+		else if (t == ScriptLexer.COLON)
+		{
+			handleOperator(FieldID, tok.text, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.SEMI_COLON)
+		{
+			handleComma(operatorStack, operandStack);
+		}
 		
 		else
 		{
-			//handleOperand(AST, tok.text, operatorStack, operandStack);
 			throw("Unknown token");
 		}
 		consume();
@@ -264,6 +305,7 @@ class ScriptParser extends Parser
 		// If the token is a left parenthesis (i.e. "("), then push it onto the stack.
 		var ast:AST = Type.createInstance(Ast, [Text, []]);
 		OperatorStack.add(ast);
+		nestLVL++;
 	}
 	private function handleClosePar(Ast:Class<AST>, Text:String, OperatorStack:Stack<AST>, OutStack:Stack<AST>):Void
 	{
@@ -293,6 +335,7 @@ class ScriptParser extends Parser
 			if (ast.canNest)
 				OutStack.add(OperatorStack.pop());
 		}
+		nestLVL--;
 	}
 	private function handleFunction(Ast:Class<AST>, Text:String, IsEmptyFunction:Bool, OperatorStack:Stack<AST>, OutStack:Stack<AST>):Void
 	{

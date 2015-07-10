@@ -1,6 +1,5 @@
 package script.ast;
 
-import script.ast.AccessField.Access;
 import script.ScriptInterp;
 import script.Token;
 
@@ -22,6 +21,8 @@ class Variable extends AST
 		if (isValue)
 			return I.curScope.resolve(text).value;
 		else
-			return new Access(I.curScope.resolve(text), "value");
+		{
+			return new VariableAccess(I.curScope.resolve(text), "value");
+		}
 	}
 }

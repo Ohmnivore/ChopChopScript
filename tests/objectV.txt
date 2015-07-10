@@ -1,2 +1,5 @@
 // 5
-{kek: 3, lel: 4, wat: {js: 5}}.wat.js;
+lel = {kek: 3, lel: 4, wat: {js: 0}};
+lel.wat.js = 5;
+lel.wat.js;
+// {kek: 3, lel: 4, wat: {js: 5}}.wat.js;

@@ -1,29 +1,30 @@
 package script.ast;
 
-import script.Symbol;
-import script.Token;
 import script.ScriptInterp;
+import script.Symbol;
 
 /**
  * ...
  * @author Ohmnivore
  */
-class Assign extends BinAST
+class If extends AST
 {
 	public function new(Text:String, Children:Array<AST>) 
 	{
 		super(Text, Children);
+		isOperator = true;
 		rightAssociative = true;
-		priority = 1;
+		argCount = 2;
+		priority = 15;
 	}
 	
 	override public function walk(I:ScriptInterp):Dynamic 
 	{
-		Reflect.setField(left, "isValue", false);
-		var l:Access = cast left.walk(I);
-		var val:Dynamic = right.walk(I);
-		l.setValue(val);
+		var cond:AST = children[0];
+		var block:AST = children[1];
 		
-		return val;
+		if (cond.walk(I) == true)
+			return block.walk(I);
+		return null;
 	}
 }

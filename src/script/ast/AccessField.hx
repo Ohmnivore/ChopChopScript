@@ -43,24 +43,7 @@ class AccessField extends BinAST
 		}
 		else
 		{
-			return new Access(left.walk(I), right.text);
+			return new VariableAccess(left.walk(I), right.text);
 		}
-	}
-}
-
-class Access
-{
-	public var oldValue:Dynamic;
-	public var newName:String;
-	
-	public function new(OldValue:Dynamic, NewName:String)
-	{
-		oldValue = OldValue;
-		newName = NewName;
-	}
-	
-	public function toString():String
-	{
-		return oldValue.toString() + "." + newName;
 	}
 }

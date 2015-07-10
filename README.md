@@ -28,12 +28,14 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
  * Comp ops: >, >=, <, <=, ==, !=
  * Bitwise ops: ~, &, |, >>, <<, >>>, ^
  * Bool ops: ||, !
- * Keywords: for (x in y), break, do, while, if
+ * Keywords: for (x in y), break, do, while, for (x; x > y; x++), else, else if
  * Ops: array[x]
  * Priority:
-	* if
 	* array[x]
+	* else, else if
 	* for (x in y)
+	* break
+	* for (x; x > y; x++)
 
 # Notes
 * No type checking
