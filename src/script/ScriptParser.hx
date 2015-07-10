@@ -164,7 +164,14 @@ class ScriptParser extends Parser
 		var tok4:Token = LT(4);
 		
 		//Flow
-		if (t == ScriptLexer.IF)
+		if (t == ScriptLexer.WHILE)
+		{
+			handleOperator(While, tok.text, operatorStack, operandStack);
+			handleFunction(Condition, "CONDITION", false, operatorStack, operandStack);
+			handleOpenPar(ParOpen, tok.text, operatorStack, operandStack);
+			consume();
+		}
+		else if (t == ScriptLexer.IF)
 		{
 			handleOperator(If, tok.text, operatorStack, operandStack);
 			handleFunction(Condition, "CONDITION", false, operatorStack, operandStack);
@@ -262,6 +269,12 @@ class ScriptParser extends Parser
 		{
 			consume();
 			handleOperator(And, tok.text + tok2.text, operatorStack, operandStack);
+		}
+		
+		//Comparison operators
+		else if (t == ScriptLexer.SMALLER)
+		{
+			handleOperator(Smaller, tok.text, operatorStack, operandStack);
 		}
 		
 		//Values

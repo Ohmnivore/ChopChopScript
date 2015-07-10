@@ -21,19 +21,24 @@ It was inspired by Nico's
 and the [hscript project](https://github.com/HaxeFoundation/hscript).
 
 # TODO
+* import statement
+* allow to restrict imports (restrict sys package by default)
+* function definitions
+* import functions from other chop scripts
 * Add support for:
  * Values: null
  * Essential math ops: /, %
  * Math ops: +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
- * Comp ops: >, >=, <, <=, ==, !=
+ * Comp ops: >, >=, <=, ==, !=
  * Bitwise ops: ~, &, |, >>, <<, >>>, ^
  * Bool ops: ||, !
- * Keywords: for (x in y), break, do, while, for (x; x > y; x++), continue
+ * Keywords: for (x in y), break, do, for (x; x > y; x++), continue
  * Priority:
-	* while
 	* break, continue
+	* do while
 	* for (x in y)
 	* for (x; x > y; x++)
+	* the rest is easy, just a bunch of copy pasting
 
 # Notes
 * No type checking
