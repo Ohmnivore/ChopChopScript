@@ -100,20 +100,20 @@ class ScriptParser extends Parser
 			first = false;
 		}
 		
-		for (a in operandStack.arr)
-		{
-			if (a.isOperator || a.canNest)
-				trace(a, a.argCount);
-			else
-				trace(a);
-		}
-		for (a in operatorStack.arr)
-		{
-			if (a.isOperator || a.canNest)
-				trace(a, a.argCount);
-			else
-				trace(a);
-		}
+		//for (a in operandStack.arr)
+		//{
+			//if (a.isOperator || a.canNest)
+				//trace(a, a.argCount);
+			//else
+				//trace(a);
+		//}
+		//for (a in operatorStack.arr)
+		//{
+			//if (a.isOperator || a.canNest)
+				//trace(a, a.argCount);
+			//else
+				//trace(a);
+		//}
 		
 		// When there are no more tokens to read:
 		// While there are still operator tokens in the stack:
@@ -176,6 +176,13 @@ class ScriptParser extends Parser
 			handleClosePar(ParClose, tok.text, operatorStack, operandStack);
 			handleFunction(Block, "BLOCK", true, operatorStack, operandStack);
 			handleOpenPar(ParOpen, tok.text, operatorStack, operandStack);
+			consume();
+		}
+		else if (lastToken != null && (lastToken.type == ScriptLexer.VARIABLE || lastToken.type == ScriptLexer.CLOSE_BRACK) && t == ScriptLexer.OPEN_BRACK)
+		{
+			handleOperator(AccessArray, "ARRAYACCESS", operatorStack, operandStack);
+			consume();
+			handleOperand(IntV, tok2.text, operatorStack, operandStack);
 			consume();
 		}
 		
@@ -262,6 +269,15 @@ class ScriptParser extends Parser
 		{
 			handleOperand(BoolV, tok.text, operatorStack, operandStack);
 		}
+		//else if ((t == ScriptLexer.VARIABLE || t == ScriptLexer.CLOSE_BRACK) && t2 == ScriptLexer.OPEN_BRACK)
+		//{
+			//handleOperand(Variable, tok.text, operatorStack, operandStack);
+			//consume();
+			//handleOperator(AccessArray, "ARRAYACCESS", operatorStack, operandStack);
+			//consume();
+			//handleOperand(IntV, tok3.text, operatorStack, operandStack);
+			//consume();
+		//}
 		else if (t == ScriptLexer.OPEN_BRACK)
 		{
 			var isEmpty:Bool = false;

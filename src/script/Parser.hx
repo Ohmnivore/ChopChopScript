@@ -38,7 +38,7 @@ class Parser
 	public function consume():Void
 	{
 		if (lookAhead.length > 0)
-			lastToken = lookAhead[0];
+			lastToken = lookAhead[p];
 		lookAhead[p] = input.nextToken();
 		p = (p + 1) % k;
 	}

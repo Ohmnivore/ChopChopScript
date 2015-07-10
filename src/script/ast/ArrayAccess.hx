@@ -11,13 +11,13 @@ class ArrayAccess extends Access
 	
 	public function new(OldValue:Dynamic, Index:Int)
 	{
-		super(oldValue);
+		super(OldValue);
 		index = Index;
 	}
 	
 	public function toString():String
 	{
-		return oldValue.toString() + "." + newName;
+		return oldValue.toString() + "[" + index + "]";
 	}
 	
 	override public function setValue(V:Dynamic):Void 

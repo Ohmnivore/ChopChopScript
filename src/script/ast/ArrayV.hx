@@ -6,6 +6,8 @@ package script.ast;
  */
 class ArrayV extends AST
 {
+	public var isValue:Bool = true;
+	
 	public function new(Text:String, Children:Array<AST>) 
 	{
 		super(Text, Children);
