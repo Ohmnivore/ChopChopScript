@@ -26,6 +26,8 @@ class While extends AST
 			last = block.walk(I);
 			if (last == Break)
 				break;
+			//else if (last == Continue)
+				//continue;
 		}
 		return last;
 	}

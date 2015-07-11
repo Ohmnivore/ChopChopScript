@@ -243,6 +243,10 @@ class ScriptParser extends Parser
 		{
 			handleOperand(Break, tok.text, operatorStack, operandStack);
 		}
+		else if (t == ScriptLexer.CONTINUE)
+		{
+			handleOperand(Continue, tok.text, operatorStack, operandStack);
+		}
 		else if (t == ScriptLexer.CLOSE_CURLY && t2 != ScriptLexer.ELSE)
 		{
 			handleClosePar(ParClose, tok.text, operatorStack, operandStack);

@@ -32,10 +32,11 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
  * Comp ops: >, >=, <=, ==, !=
  * Bitwise ops: ~, &, |, >>, <<, >>>, ^
  * Bool ops: ||, !
- * Keywords: for (x in y), do, for (x; x > y; x++), continue
+ * Keywords: for (x in y), do, for (x; x > y; x++)
+ * Shorthand blocks: if (true) statement;, while (true) statement;
  * Priority:
-	* continue
 	* do while
+	* shorthand blocks
 	* for (x in y)
 	* for (x; x > y; x++)
 	* the rest is easy, just a bunch of copy pasting
