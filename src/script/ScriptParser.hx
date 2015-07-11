@@ -183,7 +183,21 @@ class ScriptParser extends Parser
 		var tok4:Token = LT(4);
 		
 		//Flow
-		if (t == ScriptLexer.WHILE)
+		if (t == ScriptLexer.DO && t2 == ScriptLexer.WHILE)
+		{
+			consume();
+			if (nestLVL != 0)
+				handleComma(operatorStack, operandStack);
+			
+			inNest = If;
+			handleFunction(While, tok2.text, false, operatorStack, operandStack);
+			addArgCount(While, operatorStack, operandStack);
+			handleOpenPar(ParOpen, tok3.text, operatorStack, operandStack);
+			handleFunction(Condition, "CONDITION", false, operatorStack, operandStack);
+			handleOpenPar(ParOpen, tok3.text, operatorStack, operandStack);
+			consume();
+		}
+		else if (t == ScriptLexer.WHILE)
 		{
 			if (nestLVL != 0)
 				handleComma(operatorStack, operandStack);

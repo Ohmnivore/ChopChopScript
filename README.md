@@ -28,11 +28,12 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
 * Add support for:
  * Keywords: for (x in y), do, for (x; x > y; x++)
  * Priority:
-	* do while
 	* for (x in y)
 	* for (x; x > y; x++)
 
 # Notes
+* Do while loop syntax: do while (CONDITION) {STATEMENTS}
+* No ++ or -- operator
 * No shorthand blocks: if (true) x = 10;
 * No type checking
 * No ... operator aka no for (0...10) style loops
