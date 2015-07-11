@@ -32,9 +32,9 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
  * Comp ops: >, >=, <=, ==, !=
  * Bitwise ops: ~, &, |, >>, <<, >>>, ^
  * Bool ops: ||, !
- * Keywords: for (x in y), break, do, for (x; x > y; x++), continue
+ * Keywords: for (x in y), do, for (x; x > y; x++), continue
  * Priority:
-	* break, continue
+	* continue
 	* do while
 	* for (x in y)
 	* for (x; x > y; x++)

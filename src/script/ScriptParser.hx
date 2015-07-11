@@ -185,8 +185,10 @@ class ScriptParser extends Parser
 		//Flow
 		if (t == ScriptLexer.WHILE)
 		{
+			if (nestLVL != 0)
+				handleComma(operatorStack, operandStack);
+			
 			inNest = If;
-			//handleOperator(While, tok.text, operatorStack, operandStack);
 			handleFunction(While, tok.text, false, operatorStack, operandStack);
 			addArgCount(While, operatorStack, operandStack);
 			handleOpenPar(ParOpen, tok2.text, operatorStack, operandStack);
@@ -196,7 +198,9 @@ class ScriptParser extends Parser
 		}
 		else if (t == ScriptLexer.IF)
 		{
-			//handleOperator(If, tok.text, operatorStack, operandStack);
+			if (nestLVL != 0)
+				handleComma(operatorStack, operandStack);
+			
 			inNest = If;
 			handleFunction(If, tok.text, false, operatorStack, operandStack);
 			addArgCount(If, operatorStack, operandStack);

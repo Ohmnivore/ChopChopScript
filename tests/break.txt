@@ -2,9 +2,10 @@
 i = 0;
 while (true)
 {
-	if (true)
+	if (i > 4)
 	{
 		break;
+		i = 0;
 	}
 	i = i + 2;
 }
