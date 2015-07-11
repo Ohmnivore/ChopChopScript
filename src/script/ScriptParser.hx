@@ -304,6 +304,14 @@ class ScriptParser extends Parser
 		{
 			handleOperator(Multiply, tok.text, operatorStack, operandStack);
 		}
+		else if (t == ScriptLexer.DIV)
+		{
+			handleOperator(Divide, tok.text, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.MOD)
+		{
+			handleOperator(Modulo, tok.text, operatorStack, operandStack);
+		}
 		else if (t == ScriptLexer.MINUS)
 		{
 			handleOperator(Substract, tok.text, operatorStack, operandStack);
@@ -347,15 +355,10 @@ class ScriptParser extends Parser
 		{
 			handleOperand(BoolV, tok.text, operatorStack, operandStack);
 		}
-		//else if ((t == ScriptLexer.VARIABLE || t == ScriptLexer.CLOSE_BRACK) && t2 == ScriptLexer.OPEN_BRACK)
-		//{
-			//handleOperand(Variable, tok.text, operatorStack, operandStack);
-			//consume();
-			//handleOperator(AccessArray, "ARRAYACCESS", operatorStack, operandStack);
-			//consume();
-			//handleOperand(IntV, tok3.text, operatorStack, operandStack);
-			//consume();
-		//}
+		else if (t == ScriptLexer.NULL)
+		{
+			handleOperand(NullV, tok.text, operatorStack, operandStack);
+		}
 		else if (t == ScriptLexer.OPEN_BRACK)
 		{
 			var isEmpty:Bool = false;

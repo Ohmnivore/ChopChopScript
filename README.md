@@ -26,17 +26,15 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
 * function definitions
 * import functions from other chop scripts
 * Add support for:
- * Values: null
- * Essential math ops: /, %
  * Math ops: +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
  * Comp ops: >, >=, <=, ==, !=
  * Bitwise ops: ~, &, |, >>, <<, >>>, ^
  * Bool ops: ||, !
  * Keywords: for (x in y), do, for (x; x > y; x++)
- * Shorthand blocks: if (true) statement;, while (true) statement;
+ * Shorthand blocks: if (true) statement;, while (true) statement;, etc
  * Priority:
-	* do while
 	* shorthand blocks
+	* do while
 	* for (x in y)
 	* for (x; x > y; x++)
 	* the rest is easy, just a bunch of copy pasting
