@@ -328,19 +328,39 @@ class ScriptParser extends Parser
 			consume();
 			handleOperator(Or, tok.text + tok2.text, operatorStack, operandStack);
 		}
-		else if (t == ScriptLexer.NOT)
+		else if (t == ScriptLexer.NOT && t2 != ScriptLexer.EQUAL)
 		{
 			handleOperator(Not, tok.text + tok2.text, operatorStack, operandStack);
 		}
 		
 		//Comparison operators
-		else if (t == ScriptLexer.SMALLER)
+		else if (t == ScriptLexer.SMALLER && t2 != ScriptLexer.EQUAL)
 		{
 			handleOperator(Smaller, tok.text, operatorStack, operandStack);
 		}
-		else if (t == ScriptLexer.BIGGER)
+		else if (t == ScriptLexer.SMALLER && t2 == ScriptLexer.EQUAL)
+		{
+			consume();
+			handleOperator(SmallerOrEqual, tok.text + tok2.text, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.BIGGER && t2 != ScriptLexer.EQUAL)
 		{
 			handleOperator(Bigger, tok.text, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.BIGGER && t2 == ScriptLexer.EQUAL)
+		{
+			consume();
+			handleOperator(BiggerOrEqual, tok.text + tok2.text, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.EQUAL && t2 == ScriptLexer.EQUAL)
+		{
+			consume();
+			handleOperator(Equal, tok.text + tok2.text, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.NOT && t2 == ScriptLexer.EQUAL)
+		{
+			consume();
+			handleOperator(NotEqual, tok.text + tok2.text, operatorStack, operandStack);
 		}
 		
 		//Values
