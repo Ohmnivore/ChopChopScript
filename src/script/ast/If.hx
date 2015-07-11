@@ -12,10 +12,11 @@ class If extends AST
 	public function new(Text:String, Children:Array<AST>) 
 	{
 		super(Text, Children);
+		shouldPop = true;
 		isOperator = true;
 		rightAssociative = true;
 		argCount = 2;
-		priority = 15;
+		priority = 1;
 	}
 	
 	override public function walk(I:ScriptInterp):Dynamic 

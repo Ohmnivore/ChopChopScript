@@ -1,0 +1,11 @@
+// 6
+i = 0;
+while (true)
+{
+	if (true)
+	{
+		break;
+	}
+	i = i + 2;
+}
+i;

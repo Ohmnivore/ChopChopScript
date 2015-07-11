@@ -19,6 +19,11 @@ class Block extends AST
 		for (c in children)
 		{
 			ret = c.walk(I);
+			if (ret == Break)
+			{
+				I.oldScope();
+				return ret;
+			}
 		}
 		I.oldScope();
 		

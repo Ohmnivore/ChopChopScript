@@ -12,6 +12,7 @@ class AST
 	public var argCount:Int = 0;
 	public var isOperator:Bool = false;
 	public var canNest:Bool = false;
+	public var shouldPop:Bool = false;
 	public var rightAssociative:Bool = false;
 	public var priority:Int = 0;
 	

@@ -98,6 +98,22 @@ class ScriptParser extends Parser
 				parseSimple(operatorStack, operandStack);
 			}
 			first = false;
+			
+			for (a in operandStack.arr)
+			{
+				if (a.isOperator || a.canNest)
+					trace("OPERAND", a, a.argCount);
+				else
+					trace("OPERAND", a);
+			}
+			for (a in operatorStack.arr)
+			{
+				if (a.isOperator || a.canNest)
+					trace("OPERATOR", a, a.argCount);
+				else
+					trace("OPERATOR", a);
+			}
+			trace("");
 		}
 		
 		//for (a in operandStack.arr)
@@ -168,21 +184,21 @@ class ScriptParser extends Parser
 		{
 			handleOperator(While, tok.text, operatorStack, operandStack);
 			handleFunction(Condition, "CONDITION", false, operatorStack, operandStack);
-			handleOpenPar(ParOpen, tok.text, operatorStack, operandStack);
+			handleOpenPar(ParOpen, tok2.text, operatorStack, operandStack);
 			consume();
 		}
 		else if (t == ScriptLexer.IF)
 		{
 			handleOperator(If, tok.text, operatorStack, operandStack);
 			handleFunction(Condition, "CONDITION", false, operatorStack, operandStack);
-			handleOpenPar(ParOpen, tok.text, operatorStack, operandStack);
+			handleOpenPar(ParOpen, tok2.text, operatorStack, operandStack);
 			consume();
 		}
 		else if (t == ScriptLexer.ELSE && t2 != ScriptLexer.IF)
 		{
 			addArgCount(If, operatorStack, operandStack);
 			handleFunction(Block, "BLOCK", true, operatorStack, operandStack);
-			handleOpenPar(ParOpen, tok.text, operatorStack, operandStack);
+			handleOpenPar(ParOpen, tok2.text, operatorStack, operandStack);
 			consume();
 		}
 		else if (t == ScriptLexer.ELSE && t2 == ScriptLexer.IF)
@@ -191,14 +207,14 @@ class ScriptParser extends Parser
 			addArgCount(If, operatorStack, operandStack);
 			addArgCount(If, operatorStack, operandStack);
 			handleFunction(Condition, "CONDITION", false, operatorStack, operandStack);
-			handleOpenPar(ParOpen, tok.text, operatorStack, operandStack);
+			handleOpenPar(ParOpen, tok3.text, operatorStack, operandStack);
 			consume();
 		}
 		else if (t == ScriptLexer.CLOSE_PAR && t2 == ScriptLexer.OPEN_CURLY)
 		{
 			handleClosePar(ParClose, tok.text, operatorStack, operandStack);
 			handleFunction(Block, "BLOCK", true, operatorStack, operandStack);
-			handleOpenPar(ParOpen, tok.text, operatorStack, operandStack);
+			handleOpenPar(ParOpen, tok2.text, operatorStack, operandStack);
 			consume();
 		}
 		else if (lastToken != null && (lastToken.type == ScriptLexer.VARIABLE || lastToken.type == ScriptLexer.CLOSE_BRACK) && t == ScriptLexer.OPEN_BRACK)
@@ -208,6 +224,16 @@ class ScriptParser extends Parser
 			handleOperand(IntV, tok2.text, operatorStack, operandStack);
 			consume();
 		}
+		else if (t == ScriptLexer.BREAK)
+		{
+			handleOperand(Break, tok.text, operatorStack, operandStack);
+		}
+		//else if (t == ScriptLexer.SEMI_COLON && t2 == ScriptLexer.CLOSE_CURLY)
+		//{
+			//handleComma(operatorStack, operandStack);
+			//consume();
+			//handleClosePar(ParClose, tok2.text, operatorStack, operandStack);
+		//}
 		
 		else if (t == ScriptLexer.OPEN_PAR)
 		{
@@ -275,6 +301,10 @@ class ScriptParser extends Parser
 		else if (t == ScriptLexer.SMALLER)
 		{
 			handleOperator(Smaller, tok.text, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.BIGGER)
+		{
+			handleOperator(Bigger, tok.text, operatorStack, operandStack);
 		}
 		
 		//Values
@@ -347,6 +377,7 @@ class ScriptParser extends Parser
 	
 	private function handleOpenPar(Ast:Class<AST>, Text:String, OperatorStack:Stack<AST>, OutStack:Stack<AST>):Void
 	{
+		trace("OPENPAR");
 		// If the token is a left parenthesis (i.e. "("), then push it onto the stack.
 		var ast:AST = Type.createInstance(Ast, [Text, []]);
 		OperatorStack.add(ast);
@@ -354,6 +385,7 @@ class ScriptParser extends Parser
 	}
 	private function handleClosePar(Ast:Class<AST>, Text:String, OperatorStack:Stack<AST>, OutStack:Stack<AST>):Void
 	{
+		trace("CLOSEPAR");
 		// If the token is a right parenthesis (i.e. ")"):
         // Until the token at the top of the stack is a left parenthesis, pop operators off the stack onto the output queue.
 		while (true)
@@ -377,13 +409,25 @@ class ScriptParser extends Parser
 		if (OperatorStack.length > 0)
 		{
 			var ast:AST = OperatorStack.first();
-			if (ast.canNest)
+			trace(ast);
+			if (ast.canNest || ast.shouldPop)
 				OutStack.add(OperatorStack.pop());
 		}
+		//while (true)
+		//{
+			//var ast:AST = OperatorStack.first();
+			//if (ast == null)
+				//break;
+			//if (ast.canNest || ast.shouldPop)
+				//OutStack.add(OperatorStack.pop());
+			//else
+				//break;
+		//}
 		nestLVL--;
 	}
 	private function handleFunction(Ast:Class<AST>, Text:String, IsEmptyFunction:Bool, OperatorStack:Stack<AST>, OutStack:Stack<AST>):Void
 	{
+		trace("FUNCTION");
 		// If the token is a function token, then push it onto the stack.
 		var ast:AST = Type.createInstance(Ast, [Text, []]);
 		OperatorStack.add(ast);
@@ -395,6 +439,7 @@ class ScriptParser extends Parser
 	}
 	private function handleComma(OperatorStack:Stack<AST>, OutStack:Stack<AST>):Void
 	{
+		trace("COMMA");
 		// If the token is a function argument separator (e.g., a comma):
         // Until the token at the top of the stack is a left parenthesis,
 		// pop operators off the stack onto the output queue. If no left
@@ -402,11 +447,13 @@ class ScriptParser extends Parser
 		// or parentheses were mismatched.
 		
 		var k:Int = OperatorStack.length - 1;
+		var found:Bool = false;
 		while (k >= 0)
 		{
 			var o:AST = OperatorStack.arr[k];
 			if (o.canNest)
 			{
+				found = true;
 				o.argCount++;
 				break;
 			}
@@ -422,6 +469,7 @@ class ScriptParser extends Parser
 	}
 	private function addArgCount(Target:Class<AST>, OperatorStack:Stack<AST>, OutStack:Stack<AST>):Void
 	{
+		trace("ADDARGCOUNT");
 		var k:Int = OperatorStack.length - 1;
 		while (k >= 0)
 		{
@@ -436,12 +484,14 @@ class ScriptParser extends Parser
 	}
 	private function handleOperand(Ast:Class<AST>, Text:String, OperatorStack:Stack<AST>, OutStack:Stack<AST>):Void
 	{
+		trace("OPERAND");
 		// If the token is an operand, then add it to the output queue.
 		var ast:AST = Type.createInstance(Ast, [Text, []]);
 		OutStack.add(ast);
 	}
 	private function handleOperator(Ast:Class<AST>, Text:String, OperatorStack:Stack<AST>, OutStack:Stack<AST>):Void
 	{
+		trace("OPERATOR");
 		var op1:AST = Type.createInstance(Ast, [Text, []]);
 		
 		// If the token is an operator, o1, then:

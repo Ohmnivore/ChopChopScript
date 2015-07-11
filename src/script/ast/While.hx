@@ -15,7 +15,7 @@ class While extends AST
 		isOperator = true;
 		rightAssociative = true;
 		argCount = 2;
-		priority = 15;
+		priority = 1;
 	}
 	
 	override public function walk(I:ScriptInterp):Dynamic 
@@ -27,6 +27,8 @@ class While extends AST
 		while (cond.walk(I) == true)
 		{
 			last = block.walk(I);
+			if (last == Break)
+				break;
 		}
 		return last;
 	}

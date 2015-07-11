@@ -22,13 +22,14 @@ class Main
 		//var lexer:ScriptLexer = new ScriptLexer('if (true) {2 + 3; 1 + 2 * 3;} kek = 10;');
 		//var lexer:ScriptLexer = new ScriptLexer('[[0, 1, 2], [3, 4, 5]][1][2];');
 		//var lexer:ScriptLexer = new ScriptLexer('if (true) {} else if (false) {} else {}');
-        //
-        //var parser:ScriptParser = new ScriptParser(lexer);
-        //var asts:Array<AST> = parser.parse();
-		//for (a in asts)
-			//trace("\n" + a);
+		var lexer:ScriptLexer = new ScriptLexer('while (true) { if (true) { break; } }');
         
-        test();
+        var parser:ScriptParser = new ScriptParser(lexer);
+        var asts:Array<AST> = parser.parse();
+		for (a in asts)
+			trace("\n" + a);
+        
+        //test();
     }
     static public function test():Void
     {
