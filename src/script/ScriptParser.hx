@@ -323,6 +323,15 @@ class ScriptParser extends Parser
 			consume();
 			handleOperator(And, tok.text + tok2.text, operatorStack, operandStack);
 		}
+		else if (t == ScriptLexer.OR && t2 == ScriptLexer.OR)
+		{
+			consume();
+			handleOperator(Or, tok.text + tok2.text, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.NOT)
+		{
+			handleOperator(Not, tok.text + tok2.text, operatorStack, operandStack);
+		}
 		
 		//Comparison operators
 		else if (t == ScriptLexer.SMALLER)
