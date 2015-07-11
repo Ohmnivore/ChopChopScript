@@ -27,7 +27,6 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
 * import functions from other chop scripts
 * Add support for:
  * Compound ops: +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
- * Bitwise ops: ~, &, |, >>, <<, >>>, ^
  * Keywords: for (x in y), do, for (x; x > y; x++)
  * Priority:
 	* do while

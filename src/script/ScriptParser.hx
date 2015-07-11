@@ -317,6 +317,40 @@ class ScriptParser extends Parser
 			handleOperator(Substract, tok.text, operatorStack, operandStack);
 		}
 		
+		//Bitwise operators
+		else if (t == ScriptLexer.COMPLEMENT)
+		{
+			handleOperator(BitwiseNot, tok.text, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.AND && t2 != ScriptLexer.AND)
+		{
+			handleOperator(BitwiseAnd, tok.text, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.OR && t2 != ScriptLexer.OR)
+		{
+			handleOperator(BitwiseOr, tok.text, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.XOR)
+		{
+			handleOperator(BitwiseXOr, tok.text, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.BIGGER && t2 == ScriptLexer.BIGGER && t3 != ScriptLexer.BIGGER)
+		{
+			consume();
+			handleOperator(BitwiseShiftRight, tok.text + tok2.text, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.BIGGER && t2 == ScriptLexer.BIGGER && t3 == ScriptLexer.BIGGER)
+		{
+			consume();
+			consume();
+			handleOperator(BitwiseShiftRightUnsigned, tok.text + tok2.text + tok3.text, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.SMALLER && t2 == ScriptLexer.SMALLER)
+		{
+			consume();
+			handleOperator(BitwiseShiftLeft, tok.text + tok2.text, operatorStack, operandStack);
+		}
+		
 		//Boolean operators
 		else if (t == ScriptLexer.AND && t2 == ScriptLexer.AND)
 		{
