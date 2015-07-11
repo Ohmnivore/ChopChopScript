@@ -12,10 +12,7 @@ class While extends AST
 	public function new(Text:String, Children:Array<AST>) 
 	{
 		super(Text, Children);
-		isOperator = true;
-		rightAssociative = true;
-		argCount = 2;
-		priority = 1;
+		canNest = true;
 	}
 	
 	override public function walk(I:ScriptInterp):Dynamic 
