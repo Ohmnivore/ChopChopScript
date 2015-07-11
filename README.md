@@ -26,13 +26,11 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
 * function definitions
 * import functions from other chop scripts
 * Add support for:
- * Compound ops: +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
  * Keywords: for (x in y), do, for (x; x > y; x++)
  * Priority:
 	* do while
 	* for (x in y)
-	* for (x; x > y; x++) 
-	* the rest is easy, just a bunch of copy pasting
+	* for (x; x > y; x++)
 
 # Notes
 * No shorthand blocks: if (true) x = 10;

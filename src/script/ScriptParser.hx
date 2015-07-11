@@ -298,23 +298,53 @@ class ScriptParser extends Parser
 		//Math operators
 		else if (t == ScriptLexer.PLUS)
 		{
-			handleOperator(Add, tok.text, operatorStack, operandStack);
+			if (t2 == ScriptLexer.EQUAL)
+			{
+				consume();
+				handleOperator(CompoundAdd, tok.text + tok2.text, operatorStack, operandStack);
+			}
+			else
+				handleOperator(Add, tok.text, operatorStack, operandStack);
 		}
 		else if (t == ScriptLexer.MULT)
 		{
-			handleOperator(Multiply, tok.text, operatorStack, operandStack);
+			if (t2 == ScriptLexer.EQUAL)
+			{
+				consume();
+				handleOperator(CompoundMultiply, tok.text + tok2.text, operatorStack, operandStack);
+			}
+			else
+				handleOperator(Multiply, tok.text, operatorStack, operandStack);
 		}
 		else if (t == ScriptLexer.DIV)
 		{
-			handleOperator(Divide, tok.text, operatorStack, operandStack);
+			if (t2 == ScriptLexer.EQUAL)
+			{
+				consume();
+				handleOperator(CompoundDivide, tok.text + tok2.text, operatorStack, operandStack);
+			}
+			else
+				handleOperator(Divide, tok.text, operatorStack, operandStack);
 		}
 		else if (t == ScriptLexer.MOD)
 		{
-			handleOperator(Modulo, tok.text, operatorStack, operandStack);
+			if (t2 == ScriptLexer.EQUAL)
+			{
+				consume();
+				handleOperator(CompoundModulo, tok.text + tok2.text, operatorStack, operandStack);
+			}
+			else
+				handleOperator(Modulo, tok.text, operatorStack, operandStack);
 		}
 		else if (t == ScriptLexer.MINUS)
 		{
-			handleOperator(Substract, tok.text, operatorStack, operandStack);
+			if (t2 == ScriptLexer.EQUAL)
+			{
+				consume();
+				handleOperator(CompoundSubstract, tok.text + tok2.text, operatorStack, operandStack);
+			}
+			else
+				handleOperator(Substract, tok.text, operatorStack, operandStack);
 		}
 		
 		//Bitwise operators
@@ -324,31 +354,67 @@ class ScriptParser extends Parser
 		}
 		else if (t == ScriptLexer.AND && t2 != ScriptLexer.AND)
 		{
-			handleOperator(BitwiseAnd, tok.text, operatorStack, operandStack);
+			if (t2 == ScriptLexer.EQUAL)
+			{
+				consume();
+				handleOperator(CompoundBitwiseAnd, tok.text + tok2.text, operatorStack, operandStack);
+			}
+			else
+				handleOperator(BitwiseAnd, tok.text, operatorStack, operandStack);
 		}
 		else if (t == ScriptLexer.OR && t2 != ScriptLexer.OR)
 		{
-			handleOperator(BitwiseOr, tok.text, operatorStack, operandStack);
+			if (t2 == ScriptLexer.EQUAL)
+			{
+				consume();
+				handleOperator(CompoundBitwiseOr, tok.text + tok2.text, operatorStack, operandStack);
+			}
+			else
+				handleOperator(BitwiseOr, tok.text, operatorStack, operandStack);
 		}
 		else if (t == ScriptLexer.XOR)
 		{
-			handleOperator(BitwiseXOr, tok.text, operatorStack, operandStack);
+			if (t2 == ScriptLexer.EQUAL)
+			{
+				consume();
+				handleOperator(CompoundBitwiseXOr, tok.text + tok2.text, operatorStack, operandStack);
+			}
+			else
+				handleOperator(BitwiseXOr, tok.text, operatorStack, operandStack);
 		}
 		else if (t == ScriptLexer.BIGGER && t2 == ScriptLexer.BIGGER && t3 != ScriptLexer.BIGGER)
 		{
 			consume();
-			handleOperator(BitwiseShiftRight, tok.text + tok2.text, operatorStack, operandStack);
+			if (t3 == ScriptLexer.EQUAL)
+			{
+				consume();
+				handleOperator(CompoundBitwiseShiftRight, tok.text + tok2.text + tok3.text, operatorStack, operandStack);
+			}
+			else
+				handleOperator(BitwiseShiftRight, tok.text + tok2.text, operatorStack, operandStack);
 		}
 		else if (t == ScriptLexer.BIGGER && t2 == ScriptLexer.BIGGER && t3 == ScriptLexer.BIGGER)
 		{
 			consume();
 			consume();
-			handleOperator(BitwiseShiftRightUnsigned, tok.text + tok2.text + tok3.text, operatorStack, operandStack);
+			if (t4 == ScriptLexer.EQUAL)
+			{
+				consume();
+				handleOperator(CompoundBitwiseShiftRightUnsigned, tok.text + tok2.text + tok3.text + tok4.text, operatorStack, operandStack);
+			}
+			else
+				handleOperator(BitwiseShiftRightUnsigned, tok.text + tok2.text + tok3.text, operatorStack, operandStack);
 		}
 		else if (t == ScriptLexer.SMALLER && t2 == ScriptLexer.SMALLER)
 		{
 			consume();
-			handleOperator(BitwiseShiftLeft, tok.text + tok2.text, operatorStack, operandStack);
+			if (t3 == ScriptLexer.EQUAL)
+			{
+				consume();
+				handleOperator(CompoundBitwiseShiftLeft, tok.text + tok2.text + tok3.text, operatorStack, operandStack);
+			}
+			else
+				handleOperator(BitwiseShiftLeft, tok.text + tok2.text, operatorStack, operandStack);
 		}
 		
 		//Boolean operators
