@@ -7,6 +7,8 @@ import script.ast.AST;
  */
 class ScriptInterp
 {
+	public var restricted:Array<String>;
+	
 	public var globalScope:Scope;
 	public var curScope:Scope;
 	
@@ -31,6 +33,8 @@ class ScriptInterp
 	
 	public function reset():Void
 	{
+		restricted = ["Type", "Reflect", "Sys", "sys."];
+		
 		globalScope = new Scope();
 		curScope = globalScope;
 		
@@ -72,12 +76,18 @@ class ScriptInterp
 	}
 	private function quickShareClass(C:Class<Dynamic>):Void
 	{
-		curScope.define(Type.getClassName(C), C);
+		importClass(Type.getClassName(C));
 	}
 	public function importClass(FullName:String):Class<Dynamic>
 	{
 		var justName:String = FullName.split(".").pop();
 		var c:Class<Dynamic> = Type.resolveClass(FullName);
+		
+		for (r in restricted)
+		{
+			if (FullName.indexOf(r) == 0)
+				throw "Restricted class, can't import: " + FullName;
+		}
 		
 		curScope.define(FullName, c);
 		curScope.define(justName, c);

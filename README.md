@@ -21,10 +21,11 @@ It was inspired by Nico's
 and the [hscript project](https://github.com/HaxeFoundation/hscript).
 
 # TODO
-* allow to restrict imports (restrict sys package by default)
 * function definitions
 * import functions from other chop scripts
 * enums
+* resolve packages for classes: new script.ast.AST("", []);
+* robust syntax error reporting (match->[throw error if not expected token] instead of consume)
 
 # Notes
 * enums are WIP
