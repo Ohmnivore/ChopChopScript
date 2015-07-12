@@ -21,12 +21,13 @@ It was inspired by Nico's
 and the [hscript project](https://github.com/HaxeFoundation/hscript).
 
 # TODO
-* import statement
 * allow to restrict imports (restrict sys package by default)
 * function definitions
 * import functions from other chop scripts
+* enums
 
 # Notes
+* enums are WIP
 * Do while loop syntax: do while (CONDITION) {STATEMENTS}
 * No ++ or -- operator
 * No shorthand blocks: if (true) x = 10;

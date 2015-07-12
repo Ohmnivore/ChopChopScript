@@ -25,6 +25,8 @@ class Main
 		//var lexer:ScriptLexer = new ScriptLexer('while (true) { if (true) { break; } kek; }');
 		//var lexer:ScriptLexer = new ScriptLexer('ret = 0; if (false) {ret = 2;} else if (false) {ret = 5;} else {ret = 10;} ret;');
 		//var lexer:ScriptLexer = new ScriptLexer('for (i in ret){kek;}');
+		//var lexer:ScriptLexer = new ScriptLexer('import kek.sys.lel.LOL;');
+		//var lexer:ScriptLexer = new ScriptLexer('import script.ast.AST; new AST("", []).argCount;');
         //
         //var parser:ScriptParser = new ScriptParser(lexer);
         //var asts:Array<AST> = parser.parse();

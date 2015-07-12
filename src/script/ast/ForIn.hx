@@ -39,26 +39,6 @@ class ForIn extends AST
 		interp = I;
 		
 		Lambda.foreach(cont, iter);
-		//if (Std.is(cont, Array))
-		//{
-			//for (x in cast(cont, Iterable<Class>))
-			//{
-				//I.curScope.define(name, x);
-				//ret = block.walk(I);
-				//if (ret == Break)
-					//break;
-			//}
-		//}
-		//else
-		//{
-			//for (x in cast(cont, Iterator<Class>))
-			//{
-				//I.curScope.define(name, x);
-				//ret = block.walk(I);
-				//if (ret == Break)
-					//break;
-			//}
-		//}
 		
 		return ret;
 	}

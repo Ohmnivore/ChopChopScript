@@ -1,0 +1,3 @@
+// 0
+import script.ast.AST;
+new AST("", []).argCount;

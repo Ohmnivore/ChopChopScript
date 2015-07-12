@@ -29,6 +29,7 @@ class ScriptLexer extends Lexer
 	public static var BREAK:Int = Lexer.getID();
 	public static var CONTINUE:Int = Lexer.getID();
 	public static var IN:Int = Lexer.getID();
+	public static var IMPORT:Int = Lexer.getID();
 	
 	//MATH OPS
 	public static var PLUS:Int = Lexer.getID();
@@ -300,6 +301,8 @@ class ScriptLexer extends Lexer
 			ret = NULL;
 		else if (buf == "in")
 			ret = IN;
+		else if (buf == "import")
+			ret = IMPORT;
 		
 		return new Token(ret, buf, tokenNames[ret]);
 	}
@@ -321,14 +324,21 @@ class ScriptLexer extends Lexer
 	private function STR(Delim:String):Token
 	{
 		var buf:String = "";
-		do
+		//do
+		//{
+			//if (c == Lexer.EOF_STR)
+				//doThrow("Unclosed string");
+			//buf += c;
+			//consume();
+		//}
+		//while (c != Delim);
+		while (c != Delim)
 		{
 			if (c == Lexer.EOF_STR)
 				doThrow("Unclosed string");
 			buf += c;
 			consume();
 		}
-		while (c != Delim);
 		consume();
 		
 		return new Token(STRING, buf, tokenNames[STRING]);

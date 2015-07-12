@@ -183,7 +183,20 @@ class ScriptParser extends Parser
 		var tok4:Token = LT(4);
 		
 		//Flow
-		if (t == ScriptLexer.FOR)
+		if (t == ScriptLexer.IMPORT)
+		{
+			handleOperator(Import, tok.text, operatorStack, operandStack);
+			//consume();
+			
+			var toImport:String = "";
+			while (LA(2) == ScriptLexer.VARIABLE || LA(2) == ScriptLexer.FIELD_ACCESSSOR)
+			{
+				toImport += LT(2).text;
+				consume();
+			}
+			handleOperand(StringV, toImport, operatorStack, operandStack);
+		}
+		else if (t == ScriptLexer.FOR)
 		{
 			handleFunction(ForIn, tok.text, false, operatorStack, operandStack);
 			addArgCount(ForIn, operatorStack, operandStack);
@@ -516,7 +529,7 @@ class ScriptParser extends Parser
 		else if (t == ScriptLexer.OPEN_BRACK)
 		{
 			var isEmpty:Bool = false;
-			if (t2 == ScriptLexer.CLOSE_PAR)
+			if (t2 == ScriptLexer.CLOSE_BRACK)
 				isEmpty = true;
 			handleFunction(ArrayV, "ARRAY", isEmpty, operatorStack, operandStack);
 			

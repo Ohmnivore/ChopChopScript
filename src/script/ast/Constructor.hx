@@ -20,7 +20,8 @@ class Constructor extends AST
 			args.push(arg.walk(I));
 		}
 		
-		var c:Class<Dynamic> = Type.resolveClass(text);
+		//var c:Class<Dynamic> = Type.resolveClass(text);
+		var c:Class<Dynamic> = cast I.curScope.resolve(text).value;
 		
 		return Type.createInstance(c, args);
 	}

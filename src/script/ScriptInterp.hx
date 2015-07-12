@@ -35,6 +35,54 @@ class ScriptInterp
 		curScope = globalScope;
 		
 		curScope.define("trace", doTrace);
+		quickShareClass(Array);
+		//quickShareClass(ArrayAccess);
+		curScope.define("Bool", Bool);
+		curScope.define("Class", Class);
+		quickShareClass(Date);
+		quickShareClass(DateTools);
+		curScope.define("Dynamic", Dynamic);
+		curScope.define("EReg", EReg);
+		curScope.define("Enum", Enum);
+		//curScope.define("EnumValue", EnumValue);
+		curScope.define("Float", Float);
+		//curScope.define("IMap", IMap);
+		curScope.define("Int", Int);
+		quickShareClass(IntIterator);
+		//curScope.define("Iterable", Iterable);
+		//curScope.define("Iterator", Iterator);
+		quickShareClass(Lambda);
+		quickShareClass(List);
+		quickShareClass(Map);
+		quickShareClass(Math);
+		//curScope.define("Null", Null);
+		//quickShareClass(Reflect); //SECURITY
+		//curScope.define("Single", Single);
+		quickShareClass(Std);
+		quickShareClass(String);
+		quickShareClass(StringBuf);
+		quickShareClass(StringTools);
+		//quickShareClass(Sys); //SECURITY
+		//quickShareClass(Type); //SECURITY
+		//quickShareClass(UInt);
+		//curScope.define("ValueType", ValueType);
+		//curScope.define("Void", Void);
+		quickShareClass(Xml);
+		//curScope.define("XmlType", XmlType);
+	}
+	private function quickShareClass(C:Class<Dynamic>):Void
+	{
+		curScope.define(Type.getClassName(C), C);
+	}
+	public function importClass(FullName:String):Class<Dynamic>
+	{
+		var justName:String = FullName.split(".").pop();
+		var c:Class<Dynamic> = Type.resolveClass(FullName);
+		
+		curScope.define(FullName, c);
+		curScope.define(justName, c);
+		
+		return c;
 	}
 	
 	public function setSymbol(Name:String, Value:Dynamic):Void
