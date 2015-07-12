@@ -28,6 +28,7 @@ class ScriptLexer extends Lexer
 	public static var FOR:Int = Lexer.getID();
 	public static var BREAK:Int = Lexer.getID();
 	public static var CONTINUE:Int = Lexer.getID();
+	public static var IN:Int = Lexer.getID();
 	
 	//MATH OPS
 	public static var PLUS:Int = Lexer.getID();
@@ -297,6 +298,8 @@ class ScriptLexer extends Lexer
 			ret = CONTINUE;
 		else if (buf == "null")
 			ret = NULL;
+		else if (buf == "in")
+			ret = IN;
 		
 		return new Token(ret, buf, tokenNames[ret]);
 	}

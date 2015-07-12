@@ -25,11 +25,6 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
 * allow to restrict imports (restrict sys package by default)
 * function definitions
 * import functions from other chop scripts
-* Add support for:
- * Keywords: for (x in y), do, for (x; x > y; x++)
- * Priority:
-	* for (x in y)
-	* for (x; x > y; x++)
 
 # Notes
 * Do while loop syntax: do while (CONDITION) {STATEMENTS}
@@ -37,7 +32,7 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
 * No shorthand blocks: if (true) x = 10;
 * No type checking
 * No ... operator aka no for (0...10) style loops
-* No class or function definitions
+* No class definitions
 * No ternary operator (?:)
 * No string interpolation
 * No array or iterator comprehension (aka [while (i < 10) i++] && for (while (i < 10) i++))
