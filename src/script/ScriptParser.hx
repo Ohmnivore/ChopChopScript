@@ -183,7 +183,27 @@ class ScriptParser extends Parser
 		var tok4:Token = LT(4);
 		
 		//Flow
-		if (t == ScriptLexer.IMPORT)
+		if (t == ScriptLexer.FUNCTION)
+		{
+			if (nestLVL != 0)
+				handleComma(operatorStack, operandStack);
+			
+			var fname:String = null;
+			if (t2 == ScriptLexer.VARIABLE)
+			{
+				fname = tok2.text;
+				consume();
+			}
+			
+			inNest = If;
+			handleFunction(FunctionDef, fname, false, operatorStack, operandStack);
+			addArgCount(FunctionDef, operatorStack, operandStack);
+			handleOpenPar(ParOpen, tok2.text, operatorStack, operandStack);
+			handleFunction(Condition, "CONDITION", false, operatorStack, operandStack);
+			handleOpenPar(ParOpen, tok2.text, operatorStack, operandStack);
+			consume();
+		}
+		else if (t == ScriptLexer.IMPORT)
 		{
 			handleOperator(Import, tok.text, operatorStack, operandStack);
 			//consume();

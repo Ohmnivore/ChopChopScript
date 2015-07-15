@@ -20,10 +20,10 @@ class ScriptInterp
 		reset();
 	}
 	
-	private function doTrace(E:Dynamic):Void
-	{
-		haxe.Log.trace(Std.string(E), cast { fileName : "hscript", lineNumber : 0 });
-	}
+	//private function doTrace(E:Dynamic):Void
+	//{
+		//haxe.Log.trace(Std.string(E), cast { fileName : "hscript", lineNumber : 0 });
+	//}
 	private function doNew(Cl:String, Args:Array<Dynamic>):Dynamic
 	{
 		var c:Class<Dynamic> = Type.resolveClass(Cl);
@@ -31,14 +31,22 @@ class ScriptInterp
 		return Type.createInstance(c, Args);
 	}
 	
+	private function doTrace(Args:Array<Dynamic>):Void
+	{
+		for (a in Args)
+		{
+			trace(a);
+		}
+	}
 	public function reset():Void
 	{
-		restricted = ["Type", "Reflect", "Sys", "sys."];
-		
 		globalScope = new Scope();
 		curScope = globalScope;
 		
-		curScope.define("trace", doTrace);
+		curScope.define("trace", Reflect.makeVarArgs(doTrace));
+		
+		restricted = ["Type", "Reflect", "Sys", "sys."];
+		
 		quickShareClass(Array);
 		//quickShareClass(ArrayAccess);
 		curScope.define("Bool", Bool);

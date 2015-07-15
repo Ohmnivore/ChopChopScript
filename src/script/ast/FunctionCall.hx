@@ -35,6 +35,22 @@ class FunctionCall extends AST
 	
 	override public function walk(I:ScriptInterp):Dynamic 
 	{
-		return null;
+		var funcName:String = text;
+		var func:Dynamic = I.curScope.resolve(text).value;
+		
+		if (Std.is(func, FunctionDef))
+		{
+			var funcDef:FunctionDef = cast func;
+			return funcDef.callFunction(I, children);
+		}
+		else
+		{
+			var args:Array<Dynamic> = [];
+			for (arg in children)
+			{
+				args.push(arg.walk(I));
+			}
+			return Reflect.callMethod(null, func, args);
+		}
 	}
 }

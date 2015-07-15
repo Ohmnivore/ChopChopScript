@@ -27,6 +27,8 @@ class Main
 		//var lexer:ScriptLexer = new ScriptLexer('for (i in ret){kek;}');
 		//var lexer:ScriptLexer = new ScriptLexer('import kek.sys.lel.LOL;');
 		//var lexer:ScriptLexer = new ScriptLexer('import script.ast.AST; new AST("", []).argCount;');
+		//var lexer:ScriptLexer = new ScriptLexer('function kek(aaa, bbb, ccc) {aaa + bbb;}');
+		//var lexer:ScriptLexer = new ScriptLexer('kek(1, 2, 3);');
         //
         //var parser:ScriptParser = new ScriptParser(lexer);
         //var asts:Array<AST> = parser.parse();

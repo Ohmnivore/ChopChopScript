@@ -30,6 +30,8 @@ class ScriptLexer extends Lexer
 	public static var CONTINUE:Int = Lexer.getID();
 	public static var IN:Int = Lexer.getID();
 	public static var IMPORT:Int = Lexer.getID();
+	public static var FUNCTION:Int = Lexer.getID();
+	public static var RETURN:Int = Lexer.getID();
 	
 	//MATH OPS
 	public static var PLUS:Int = Lexer.getID();
@@ -303,6 +305,10 @@ class ScriptLexer extends Lexer
 			ret = IN;
 		else if (buf == "import")
 			ret = IMPORT;
+		else if (buf == "function")
+			ret = FUNCTION;
+		else if (buf == "return")
+			ret = RETURN;
 		
 		return new Token(ret, buf, tokenNames[ret]);
 	}

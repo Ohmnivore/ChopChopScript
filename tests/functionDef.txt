@@ -1,0 +1,8 @@
+// 6
+function add(a, b)
+{
+	a + b;
+}
+
+trace("calling pre-defined trace function", "also varargs", "feelsgood.png");
+add(5, 1);

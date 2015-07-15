@@ -21,11 +21,11 @@ It was inspired by Nico's
 and the [hscript project](https://github.com/HaxeFoundation/hscript).
 
 # TODO
-* function definitions
 * import functions from other chop scripts
 * enums
 * resolve packages for classes: new script.ast.AST("", []);
 * robust syntax error reporting (match->[throw error if not expected token] instead of consume)
+* turn inNest into an inObject bool
 
 # Notes
 * enums are WIP
