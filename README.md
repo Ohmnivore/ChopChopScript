@@ -4,6 +4,25 @@ is focused on speed. It expects that you have already
 declared all necessary methods and classes in your Haxe
 code, so all it needs to do is call them.
 
+# How to use
+
+	var script:String = sys.io.File.getContent(path);
+	var lexer:ScriptLexer = new ScriptLexer(script);
+	var parser:ScriptParser = new ScriptParser(lexer);
+	var interp:ScriptInterp = new ScriptInterp();
+	trace(interp.interpret(parser.parse()));
+
+For your own purposes you only need the src/script folder. However, this project
+builds into an interpreter with the following usage:
+
+	Usage: ChopChop Interpreter
+	[source] -> the file to interpret -> expects: [path]
+	-[test] (-t) -> run tests and exit -> expects: []
+	ex: chopchop.exe test.cpcp
+	ex: chopchop.exe -t
+
+You can get a pre-compiled version here: https://github.com/Ohmnivore/ChopChopScript/releases
+
 # Why?
 Of course half of this is just me fooling around, but the
 main idea is to provide a scripting tool for Haxe with the

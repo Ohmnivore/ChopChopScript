@@ -3,7 +3,7 @@ package script;
 class Lexer
 {
 	public static inline var EOF_STR:String = "EOF";
-	public static var EOF:Int = getID();
+	public static var EOF:Int = 1;
 	
 	private var input:String;
 	public var p:Int = 0;
@@ -15,7 +15,7 @@ class Lexer
 		reset();
 	}
 	
-	private static var curID:Int = 0;
+	private static var curID:Int = 1;
 	public static function getID():Int
 	{
 		curID += 1;

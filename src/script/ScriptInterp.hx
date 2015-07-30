@@ -65,7 +65,7 @@ class ScriptInterp
 		//curScope.define("Iterator", Iterator);
 		quickShareClass(Lambda);
 		quickShareClass(List);
-		quickShareClass(Map);
+		//quickShareClass(Map);
 		quickShareClass(Math);
 		//curScope.define("Null", Null);
 		//quickShareClass(Reflect); //SECURITY
