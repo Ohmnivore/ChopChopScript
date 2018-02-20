@@ -1,6 +1,6 @@
 # About
-ChopChop script is a script language for Haxe.
-It can interface with Haxe code using reflection.
+ChopChop script is a scripting language for Haxe.
+It can interface with Haxe code using runtime reflection.
 
 # Usage
 
@@ -10,7 +10,7 @@ It can interface with Haxe code using reflection.
 	var interp:ScriptInterp = new ScriptInterp();
 	trace(interp.interpret(parser.parse()));
 
-For your own purposes you only need the src/script folder. This project
+For your own purposes you only need the `src/script folder`. This project
 also builds into an interpreter with the following usage:
 
 	Usage: ChopChop Interpreter
@@ -21,7 +21,7 @@ also builds into an interpreter with the following usage:
 
 You can download a pre-compiled version: https://github.com/Ohmnivore/ChopChopScript/releases
 
-The language syntax is illustrated in the [test suite](tests).
+The language syntax is illustrated in the test suite directory (`src/tests`).
 
 # TODO
 * import functions from other chop scripts
