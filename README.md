@@ -1,10 +1,8 @@
-# What is this?
-ChopChop script is a script language for Haxe that
-is focused on speed. It expects that you have already
-declared all necessary methods and classes in your Haxe
-code, so all it needs to do is call them.
+# About
+ChopChop script is a script language for Haxe.
+It can interface with Haxe code using reflection.
 
-# How to use
+# Usage
 
 	var script:String = sys.io.File.getContent(path);
 	var lexer:ScriptLexer = new ScriptLexer(script);
@@ -12,8 +10,8 @@ code, so all it needs to do is call them.
 	var interp:ScriptInterp = new ScriptInterp();
 	trace(interp.interpret(parser.parse()));
 
-For your own purposes you only need the src/script folder. However, this project
-builds into an interpreter with the following usage:
+For your own purposes you only need the src/script folder. This project
+also builds into an interpreter with the following usage:
 
 	Usage: ChopChop Interpreter
 	[source] -> the file to interpret -> expects: [path]
@@ -21,29 +19,15 @@ builds into an interpreter with the following usage:
 	ex: chopchop.exe test.cpcp
 	ex: chopchop.exe -t
 
-You can get a pre-compiled version here: https://github.com/Ohmnivore/ChopChopScript/releases
+You can download a pre-compiled version: https://github.com/Ohmnivore/ChopChopScript/releases
 
-# Why?
-Of course half of this is just me fooling around, but the
-main idea is to provide a scripting tool for Haxe with the
-best performance possible. I'm planning on using benchmarks
-to compare it to
-[hscript](https://github.com/HaxeFoundation/hscript),
-which seems to be the only alternative so far, and then
-to a Haxe equivalent of the test scripts.
-
-I plan to maybe use this for a plugin system in one of
-my games.
-
-It was inspired by Nico's
-[VainLang](http://nicom1.github.io/interpreter/)
-and the [hscript project](https://github.com/HaxeFoundation/hscript).
+The language syntax is illustrated in the [test suite](tests).
 
 # TODO
 * import functions from other chop scripts
 * enums
 * resolve packages for classes: new script.ast.AST("", []);
-* robust syntax error reporting (match->[throw error if not expected token] instead of consume)
+* more robust syntax error reporting (match->[throw error if not expected token] instead of consume)
 * turn inNest into an inObject bool
 
 # Notes
@@ -63,7 +47,7 @@ and the [hscript project](https://github.com/HaxeFoundation/hscript).
 * No pattern matching
 * No need for type casting
 
-# REF
+# References
 * https://en.wikipedia.org/wiki/Shunting-yard_algorithm
 * http://www.amazon.ca/Language-Implementation-Patterns-Domain-Specific-Programming/dp/193435645X
 * http://rosettacode.org/wiki/Parsing/Shunting-yard_algorithm
